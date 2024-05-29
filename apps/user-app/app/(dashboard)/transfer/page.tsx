@@ -48,7 +48,7 @@ export default async function() {
                 <AddMoney />
             </div>
             <div>
-                <BalanceCard id={Number(session?.user?.id)} amount={balance.amount} locked={balance.locked} />
+                <BalanceCard  amount={balance.amount} locked={balance.locked} />
                 <div className="pt-4">
                     <Transactions type="transfer" transactions={transactions} />
                 </div>
