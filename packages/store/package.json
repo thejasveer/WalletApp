@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "recoil": "^0.7.7"
-  },
-  "exports": {
-    "./balance": "./src/hooks/useBalance"
+    "recoil": "^0.7.7",
+    "@repo/db": "*"
   }
+
 }
