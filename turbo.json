@@ -12,6 +12,7 @@
     "dev": {
       "cache": false,
       "persistent": true
-    }
+    },
+    "globalEnv": ["JWT_SECRET","NEXTAUTH_URL"]
   }
 }
