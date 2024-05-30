@@ -3,11 +3,11 @@
 import { Card } from "@repo/ui/card";
  
 
-export const BalanceCard = ({amount, locked,id}: {
+export const BalanceCard = ({amount, locked}: {
     
     amount: number;
     locked: number;
-    id: number;
+ 
 }) => {
     
     // const {balance,setBalance} = useBalance(id)
