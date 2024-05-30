@@ -16,7 +16,9 @@
       "persistent": true,
       "dotEnv": [".env.development.local", ".env.local", ".env.development", ".env"]
     },
-    "env": ["JWT_SECRET"]
+    "env": {
+      "JWT_SECRET": "string"
+    }
    
   }
 }
