@@ -28,3 +28,15 @@ jobs:
 
       - name: Verify Pushed Image
         run: docker pull codewithjass/wallet_app:latest # Replace with your Docker Hub username and repository
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker pull codewithjass/wallet_app:latest
+            sudo docker stop wallet_app || true
+            sudo docker rm wallet_app || true
+            sudo docker run -d --name wallet_app -p 3005:3000 codewithjass/wallet_app:latest
