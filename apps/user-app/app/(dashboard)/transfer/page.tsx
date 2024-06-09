@@ -20,7 +20,8 @@ async function getBalance() {
 
 async function getOnRampTransactions() {
     const session = await getServerSession(authOptions);
-    const txns = await prisma.onRampTransaction.findMany({
+    console.log("Dwwde",session)
+    const txns = await prisma.rampTransaction.findMany({
         where: {
             userId: Number(session?.user?.id)
         }
@@ -50,7 +51,7 @@ export default async function() {
             <div>
                 <BalanceCard  amount={balance.amount} locked={balance.locked} />
                 <div className="pt-4">
-                    <Transactions type="transfer" transactions={transactions} />
+               { transactions.length>0 &&  <Transactions type="transfer" transactions={transactions} />  } 
                 </div>
             </div>
         </div>

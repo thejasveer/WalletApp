@@ -16,8 +16,9 @@ async function main() {
             locked: 0
         }
       },
-      OnRampTransaction: {
+      RampTransaction: {
         create: {
+          type:"ON_RAMP",
           startTime: new Date(),
           status: "Success",
           amount: 20000,
@@ -40,8 +41,9 @@ async function main() {
             locked: 0
         }
       },
-      OnRampTransaction: {
+      RampTransaction: {
         create: {
+          type:"ON_RAMP",
           startTime: new Date(),
           status: "Failure",
           amount: 2000,

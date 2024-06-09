@@ -14,19 +14,22 @@ export const authOptions = {
           async authorize(credentials: any) {
             // Do zod validation, OTP validation here
             const hashedPassword = await bcrypt.hash(credentials.password, 10);
+            console.log("yes")
             const existingUser = await db.user.findFirst({
                 where: {
                     number: credentials.phone
                 }
             });
-
+              
             if (existingUser) {
                 const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
                 if (passwordValidation) {
                     return {
                         id: existingUser.id.toString(),
                         name: existingUser.name,
-                        email: existingUser.number
+                        number: existingUser.number,
+                        netbankingLoginToken:existingUser.netbankingLoginToken
+                      
                     }
                 }
                 return null;
@@ -43,9 +46,12 @@ export const authOptions = {
                 return {
                     id: user.id.toString(),
                     name: user.name,
-                    email: user.number
+                    number: user.number,
+                
+                   
                 }
             } catch(e) {
+
                 console.error(e);
             }
 
@@ -53,12 +59,17 @@ export const authOptions = {
           },
         })
     ],
-    secret: process.env.JWT_SECRET || "secret",
+    secret: process.env.NEXT_PUBLIC_JWT_SECRET ,
     callbacks: {
         // TODO: can u fix the type here? Using any is bad
         async session({ token, session }: any) {
+            const user = await db.user.findFirst({
+                where: {
+                    id:Number(token.sub)
+                }
+            });
             session.user.id = token.sub
-
+            session.user.netbankingLoginToken = user?.netbankingLoginToken
             return session
         }
     }

@@ -1,7 +1,5 @@
-"use client"
- 
+import { useBalance } from "@repo/store";
 import { Card } from "@repo/ui/card";
- 
 
 export const BalanceCard = ({amount, locked}: {
     
@@ -9,12 +7,8 @@ export const BalanceCard = ({amount, locked}: {
     locked: number;
  
 }) => {
-    
-    // const {balance,setBalance} = useBalance(id)
-    // useEffect(()=>{
-    //     setBalance(amount)
-    // },[])
-  
+
+ 
 
     return <Card title={"Balance"}>
         <div className="flex justify-between border-b border-slate-300 pb-2">
