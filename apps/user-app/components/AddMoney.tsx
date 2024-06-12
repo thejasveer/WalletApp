@@ -31,9 +31,7 @@ export const AddMoney = () => {
 
     },[])
 
- 
-
-        const openNetbankingPopup = ()=>{
+     const openNetbankingPopup = ()=>{
              
             console.log(url)
             const features = "height=700,width=700";

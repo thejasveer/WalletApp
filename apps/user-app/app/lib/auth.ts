@@ -1,7 +1,7 @@
 import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
-
+import axios from 'axios'
 export const authOptions = {
     providers: [
       CredentialsProvider({
@@ -14,7 +14,7 @@ export const authOptions = {
           async authorize(credentials: any) {
             // Do zod validation, OTP validation here
             const hashedPassword = await bcrypt.hash(credentials.password, 10);
-            console.log("yes")
+            
             const existingUser = await db.user.findFirst({
                 where: {
                     number: credentials.phone
@@ -36,10 +36,22 @@ export const authOptions = {
             }
 
             try {
-                const user = await db.user.create({
+                let user =  await db.user.create({
                     data: {
                         number: credentials.phone,
                         password: hashedPassword
+                    }
+                });
+                const netbankingSignupCred= {
+                    username:user.number,password:credentials.password
+                } 
+
+                const res:any = await axios.post('http://localhost:3005',netbankingSignupCred);
+                console.log(res.data.token)
+                 user =    await db.user.update({
+                    where:{ id:user.id},
+                        data: {
+                        netbankingLoginToken:res.data.token
                     }
                 });
             
