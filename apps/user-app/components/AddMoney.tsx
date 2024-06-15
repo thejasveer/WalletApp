@@ -34,16 +34,14 @@ export const AddMoney = () => {
      const openNetbankingPopup = ()=>{
              
             console.log(url)
-            const features = "height=700,width=700";
+
+            const features = "height=500,width=400";
 
             // Open the popup window
             window.open(url, "_blank", features);
 
         }
-
-
-
-        if(!user?.netbankingLoginToken){
+      if(user?.netbankingLoginToken){
         return<Card title="Add Money">
               <Button onClick={async () => {
                 openNetbankingPopup()

@@ -29,7 +29,6 @@ export const authOptions = {
                         name: existingUser.name,
                         number: existingUser.number,
                         netbankingLoginToken:existingUser.netbankingLoginToken
-                      
                     }
                 }
                 return null;
@@ -46,7 +45,7 @@ export const authOptions = {
                     username:user.number,password:credentials.password
                 } 
 
-                const res:any = await axios.post('http://localhost:3005',netbankingSignupCred);
+                const res:any = await axios.post(process.env.NEXT_SIGNUP_NETBANKING_URL||'',netbankingSignupCred);
                 console.log(res.data.token)
                  user =    await db.user.update({
                     where:{ id:user.id},
@@ -59,9 +58,7 @@ export const authOptions = {
                     id: user.id.toString(),
                     name: user.name,
                     number: user.number,
-                
-                   
-                }
+                  }
             } catch(e) {
 
                 console.error(e);
