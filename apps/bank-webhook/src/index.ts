@@ -1,47 +1,101 @@
 import express from "express";
-
+import cors from 'cors'
 import { bankWebhookSchema } from "@repo/schemas/schemas";
-import db from "@repo/db/client";
+import db  from "@repo/db/client";
 const app = express();
-
+app.use(cors())
+app.use(express.json())
+import {RampStatus} from '@prisma/client'
+ 
 
 app.post('/bankWebhook',async (req,res)=>{
     const params =req.body;
+    console.log(params)
     const {success} = bankWebhookSchema.safeParse(params)
     try {
         if(success){
-            const paymentInformation: {
+            const payload: {
                 token: string;
-                userId: number;
-                amount: number
+                status:RampStatus;
             } = {
                 token: params.token,
-                userId: params.user_identifier,
-                amount: params.amount
+                status: params.status
             };
-            await db.$transaction([
-            db.balance.update({
-                where:{userId: paymentInformation.userId},
-                data:{
-                   amount:{ increment:paymentInformation.amount}
+
+            const txn= await db.rampTransaction.findFirst({
+                where:{
+                    token:payload.token
                 }
-            }),
-            db.onRampTransaction.update({
-                where: {
-                    token: paymentInformation.token
-                }, 
-                data: {
-                    status: "Success",
+            });
+
+            if(!txn){
+                
+                res.status(411).json({
+                    message: "Transaction not found."
+                })
+            }
+
+            if(txn && payload.status== 'Success'){
+               
+                if(txn.type=='ON_RAMP'){
+                    await db.$transaction([
+                    
+                            db.balance.update({
+                            where:{userId: txn.userId},
+                            data:{
+                               amount:{ increment:txn.amount}
+                            }
+                        }),
+                        db.rampTransaction.update({
+                            where: {
+                                token: payload.token
+                            }, 
+                            data: {
+                                status:  payload.status,
+                            }
+                        })
+                    ]); 
+                }else{
+
+                    await db.$transaction([
+                        db.balance.update({
+                        where:{userId: txn.userId},
+                        data:{
+                           amount:{ decrement:txn.amount}
+                        }
+                    }),
+                    db.rampTransaction.update({
+                        where: {
+                            token: payload.token
+                        }, 
+                        data: {
+                            status:  payload.status,
+                        }
+                    })
+                ]); 
                 }
-            })
-        ]);
+                
+            }else{
+                await db.$transaction([
+                
+                db.rampTransaction.update({
+                    where: {
+                        token: payload.token
+                    }, 
+                    data: {
+                        status: payload.status,
+                    }
+                })
+            ]); 
+            }
+           
             res.status(200).json({
                 message: "Captured"
             })
     
         }else{
             res.status(411).json({
-                message: "Invalid inputs"
+                message: "Invalid Request."
             })
         }
     } catch (error) {

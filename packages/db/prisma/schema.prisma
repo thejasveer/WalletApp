@@ -40,11 +40,6 @@ model RampTransaction {
   user      User       @relation(fields: [userId], references: [id])
 }
 
-enum RampType {
-  ON_RAMP
-  OFF_RAMP
-}
-
 model Balance {
   id     Int  @id @default(autoincrement())
   userId Int  @unique
@@ -58,11 +53,16 @@ enum AuthType {
   Github
 }
 
+enum RampType {
+  ON_RAMP
+  OFF_RAMP
+}
+
 enum RampStatus {
-  Success
-  Failure
-  Processing
-  Initiated
+  INITIATED
+  PROCESSING
+  SUCCESS
+  FAILED
 }
 
 model p2pTransfer {

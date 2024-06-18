@@ -34,20 +34,13 @@ export const AddMoney = () => {
      const openNetbankingPopup = async()=>{
              
             console.log(url);
-            const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_NETBANKING_SECRET)
-            const token = await new SignJWT({
-                amount: amount,
-                type:'OFF_RAMP',
-               
-              }).setProtectedHeader({ alg: "HS256" })
-              .setIssuedAt()
-              .setExpirationTime("10m")
-              .sign(secret);
-              const params = new URLSearchParams({
-                paymentToken: token,
-                token:user.netbankingLoginToken
-                 });
-            
+            const {token} = await createRampTransaction("ON_RAMP",amount)
+          
+            const params = new URLSearchParams({
+            paymentToken: token,
+            token:user.netbankingLoginToken,
+            });
+        
             const features = "height=500,width=400";
              url =`${url}?${params}`
       
