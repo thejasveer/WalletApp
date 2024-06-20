@@ -27,7 +27,7 @@ export const Transactions =async({
                         {t.time.toDateString()}
                     </div>
                 </div>
-                <div className="flex flex-col justify-center">
+                <div className={`flex flex-col justify-center ${t.type="ON_RAMP"?'text-green-500':''} `}>
                     + ${t.amount / 100}
                 </div>
 

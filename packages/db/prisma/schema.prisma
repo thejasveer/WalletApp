@@ -43,8 +43,8 @@ model RampTransaction {
 model Balance {
   id     Int  @id @default(autoincrement())
   userId Int  @unique
-  amount Int
-  locked Int
+  amount Int  @default(20000)
+  locked Int  @default(0)
   user   User @relation(fields: [userId], references: [id])
 }
 

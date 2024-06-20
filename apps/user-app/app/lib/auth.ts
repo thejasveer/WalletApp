@@ -42,6 +42,7 @@ export const authOptions = {
                         password: hashedPassword
                     }
                 });
+      
                 const netbankingSignupCred= {
                     username:user.number,password:credentials.password
                 } 

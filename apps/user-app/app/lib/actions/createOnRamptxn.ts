@@ -22,7 +22,7 @@ export async function createRampTransaction(type: RampType, amount: number) {
         type:type,
       }).setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("10m")
+        .setExpirationTime("100m")
         .sign(secret);
 
     await prisma.rampTransaction.create({

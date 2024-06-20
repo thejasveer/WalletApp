@@ -36,17 +36,19 @@ app.post('/bankWebhook',async (req,res)=>{
             }
 
             if(txn && payload.status== 'Success'){
+                console.log(payload)
                
                 if(txn.type=='ON_RAMP'){
-                    await db.$transaction([
+                    console.log(txn)
+                    await db.$transaction(async(tx)=>{[
                     
-                            db.balance.update({
+                        await db.balance.update({
                             where:{userId: txn.userId},
                             data:{
                                amount:{ increment:txn.amount}
                             }
                         }),
-                        db.rampTransaction.update({
+                        await  db.rampTransaction.update({
                             where: {
                                 token: payload.token
                             }, 
@@ -54,17 +56,17 @@ app.post('/bankWebhook',async (req,res)=>{
                                 status:  payload.status,
                             }
                         })
-                    ]); 
+                    ]}); 
                 }else{
 
-                    await db.$transaction([
-                        db.balance.update({
+                    await db.$transaction(async(tx)=>{[
+                        await    db.balance.update({
                         where:{userId: txn.userId},
                         data:{
                            amount:{ decrement:txn.amount}
                         }
                     }),
-                    db.rampTransaction.update({
+                    await  db.rampTransaction.update({
                         where: {
                             token: payload.token
                         }, 
@@ -72,7 +74,7 @@ app.post('/bankWebhook',async (req,res)=>{
                             status:  payload.status,
                         }
                     })
-                ]); 
+                ]}); 
                 }
                 
             }else{

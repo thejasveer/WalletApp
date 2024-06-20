@@ -31,6 +31,13 @@ export const AddMoney = () => {
 
     },[])
 
+    const receiveMessage=(event: any)=>{
+        if (event.origin !== 'http://localhost:5173') {
+            return;
+        }
+        console.log('Message from new window:', event.data);
+    }
+
      const openNetbankingPopup = async()=>{
              
             console.log(url);
@@ -45,7 +52,9 @@ export const AddMoney = () => {
              url =`${url}?${params}`
       
             // Open the popup window
+
             window.open(url, "_blank", features);
+            setAmount(0);
 
         }
       if(!user?.netbankingLoginToken){
@@ -64,15 +73,15 @@ export const AddMoney = () => {
         <TextInput label={"Amount"} placeholder={"Amount"} onChange={(val) => {
             setAmount(Number(val))
         }} />
-        <div className="py-4 text-left">
+        {/* <div className="py-4 text-left">
             Bank
-        </div>
-        <Select onSelect={(value) => {
+        </div> */}
+        {/* <Select onSelect={(value) => {
             setRedirectUrl(SUPPORTED_BANKS.find(x => x.name === value)?.redirectUrl || "")
         }} options={SUPPORTED_BANKS.map(x => ({
             key: x.name,
             value: x.name
-        }))} />
+        }))} /> */}
         <div className="flex justify-center pt-4">
             <Button onClick={async () => {
                 if(amount>0&& !isNaN(amount)){
