@@ -2,6 +2,7 @@ import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
 import axios from 'axios'
+import { addAbortListener } from "events";
 export const authOptions = {
     providers: [
       CredentialsProvider({
@@ -39,10 +40,18 @@ export const authOptions = {
                 let user =  await db.user.create({
                     data: {
                         number: credentials.phone,
-                        password: hashedPassword
+                        password: hashedPassword,
+                        Balance: {
+                            create: {
+                                amount: 0,
+                                locked: 0
+                            }
+                          },
                     }
                 });
-      
+                
+       
+
                 const netbankingSignupCred= {
                     username:user.number,password:credentials.password
                 } 
