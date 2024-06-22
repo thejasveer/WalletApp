@@ -37,24 +37,31 @@ export const AddMoney = () => {
         }
         console.log('Message from new window:', event.data);
     }
-
+    function popupWindow(url:string, windowName:string, win:any,w:number, h:number) {
+        const y = win.top.outerHeight / 2 + win.top.screenY - ( h / 2);
+        const x = win.top.outerWidth / 2 + win.top.screenX - ( w / 2);
+        return win.open(url, windowName, `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);ß
+    }
      const openNetbankingPopup = async()=>{
-             
-            console.log(url);
             const {token} = await createRampTransaction("ON_RAMP",amount)
-          
             const params = new URLSearchParams({
             paymentToken: token,
             token:user.netbankingLoginToken,
             });
-        
-            const features = "height=500,width=400";
-             url =`${url}?${params}`
-      
-            // Open the popup window
-
-            window.open(url, "_blank", features);
-            setAmount(0);
+            const newWindow = popupWindow(url+'?'+params,"netbank app",window,400,500);
+            if (newWindow) {
+                // Setting up an interval to check if the window is closed
+                const checkWindowClosedInterval = setInterval(() => {
+                    if (newWindow.closed) {
+                        clearInterval(checkWindowClosedInterval);
+                        setAmount(0);
+                        
+                    }
+                }, 1000); // Check every second
+            } else {
+                alert('Failed to open new window. Please allow pop-ups for this site.');
+            }
+          
 
         }
       if(!user?.netbankingLoginToken){
@@ -70,18 +77,10 @@ export const AddMoney = () => {
 
     return <Card title="Add Money">
     <div className="w-full">
-        <TextInput label={"Amount"} placeholder={"Amount"} onChange={(val) => {
+        <TextInput label={"Amount"} placeholder={"Amount"} val={amount} onChange={(val) => {
             setAmount(Number(val))
         }} />
-        {/* <div className="py-4 text-left">
-            Bank
-        </div> */}
-        {/* <Select onSelect={(value) => {
-            setRedirectUrl(SUPPORTED_BANKS.find(x => x.name === value)?.redirectUrl || "")
-        }} options={SUPPORTED_BANKS.map(x => ({
-            key: x.name,
-            value: x.name
-        }))} /> */}
+       
         <div className="flex justify-center pt-4">
             <Button onClick={async () => {
                 if(amount>0&& !isNaN(amount)){

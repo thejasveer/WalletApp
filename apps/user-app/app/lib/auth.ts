@@ -89,6 +89,9 @@ export const authOptions = {
                 }
             });
             session.user.id = token.sub
+            session.user.number = token.number
+            session.user.name = token.name
+            session.user.email = token.email
             session.user.netbankingLoginToken = user?.netbankingLoginToken
             return session
         }

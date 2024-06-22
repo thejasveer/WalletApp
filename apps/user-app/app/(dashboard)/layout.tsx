@@ -1,3 +1,4 @@
+import { Loader } from "../../components/Loader";
 import { SidebarItem } from "../../components/SidebarItem";
 
 export default function Layout({
@@ -6,7 +7,9 @@ export default function Layout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <div className="flex">
+    <div className="relative    p-6  rounded-lg shadow-md  ">
+      
+    <div className="flex ">
         <div className="w-72 border-r border-slate-300 min-h-screen mr-4 pt-28">
             <div>
                 <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
@@ -16,6 +19,9 @@ export default function Layout({
             </div>
         </div>
             {children}
+            
+    </div>
+    {/* <Loader/> */}
     </div>
   );
 }

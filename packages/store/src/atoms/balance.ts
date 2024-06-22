@@ -1,17 +1,24 @@
 
-import { atom, atomFamily, selector, selectorFamily } from "recoil";
+import {  selector   } from "recoil";
 import db from "@repo/db/client"
+import { userAtom } from "./user";
  
-export const balanceAtom = atomFamily ({
+export const balanceAtom = selector ({
     key:"myBlogAtom",
-    default: selectorFamily({
-      key:"balanceAtomSelector",
-      get: (id: number) => async ({get}) => {
-      console.log("aa",id)
+    get:  async (prop) => {
+
+        const user = prop.get(userAtom)
+
+        if(!user) return {
+            amount:  0,
+            locked:   0
+        }
+      
         // get(MyBlogsTrigger);
+        const {id}= user;
         const balance = await db.balance.findFirst({
             where: {
-                userId: id
+                userId: Number(id)
             }
         });
         return {
@@ -22,4 +29,4 @@ export const balanceAtom = atomFamily ({
     },
    
     })
-  });
+ 
