@@ -5,9 +5,10 @@ import { Card } from "@repo/ui/card";
 import { Select } from "@repo/ui/select";
 import { useEffect, useState } from "react";
 import { TextInput } from "@repo/ui/textinput";
-import { createRampTransaction } from "../app/lib/actions/createOnRamptxn";
+import { createRampTransaction } from "../app/lib/actions/createRamptxn";
 import {  useSession } from "next-auth/react";
 import { SignJWT } from "jose";
+import { useBalanace } from "../hooks/useBalance";
 const SUPPORTED_BANKS = [{
     name: "HDFC Bank",
     redirectUrl: "https://netbanking.hdfcbank.com"
@@ -26,6 +27,7 @@ export const AddMoney = () => {
     let [url,setUrl] = useState(process.env.NEXT_PUBLIC_NETBANKING_URL);
     const [redirectUrl, setRedirectUrl] = useState(SUPPORTED_BANKS[0]?.redirectUrl||"");
     const [amount, setAmount] = useState(0);
+    const {resetBalance} = useBalanace()
     useEffect(()=>{
        
 
@@ -54,6 +56,7 @@ export const AddMoney = () => {
                 const checkWindowClosedInterval = setInterval(() => {
                     if (newWindow.closed) {
                         clearInterval(checkWindowClosedInterval);
+                        resetBalance()
                         setAmount(0);
                         
                     }
@@ -75,26 +78,29 @@ export const AddMoney = () => {
             </Card>
         }
 
-    return <Card title="Add Money">
-    <div className="w-full">
-        <TextInput label={"Amount"} placeholder={"Amount"} val={amount} onChange={(val) => {
-            setAmount(Number(val))
-        }} />
-       
-        <div className="flex justify-center pt-4">
-            <Button onClick={async () => {
-                if(amount>0&& !isNaN(amount)){
-                    // await createRampTransaction("ON_RAMP",amount)
-                    openNetbankingPopup()
-                    // window.location.href = redirectUrl || "";
-                }else{
-                    alert("Please enter a  valid amount")
-                }
-               
-            }}>
-            Add Money
-            </Button>
+    return <div className="w-full ">
+         <Card title="Add Money">
+            <div className="w-full">
+                <TextInput label={"Amount"} placeholder={"Amount"} val={amount} onChange={(val) => {
+                    setAmount(Number(val))
+                }} />
+            
+                <div className="flex justify-center pt-4">
+                    <Button onClick={async () => {
+                        if(amount>0&& !isNaN(amount)){
+                            // await createRampTransaction("ON_RAMP",amount)
+                            openNetbankingPopup()
+                            // window.location.href = redirectUrl || "";
+                        }else{
+                            alert("Please enter a  valid amount")
+                        }
+                    
+                    }}>
+                    Add Money
+                    </Button>
+                </div>
+            </div>
+        </Card>
         </div>
-    </div>
-</Card>
+       
 }

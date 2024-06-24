@@ -1,9 +1,11 @@
 "use client"
-import { useBalance } from "@repo/store";
+ 
+ 
 
 import { Card } from "@repo/ui/card";
 import {   useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useBalanace } from "../hooks/useBalance";
 
 interface Balance{
     amount:number;
@@ -18,19 +20,21 @@ export const BalanceCard = ({amount, locked}: {
 }) => {
    
     const [balanceToDisplay,setBalance] = useState<Balance>({amount:0,locked:0})
-    const {balance}= useBalance();
-    useEffect(()=>{
-        setBalance(balance)
-    },[balance])
-  
 
-    // const [balance,setBalance] = useBalance(1)
+    const {balance,resetBalance} =  useBalanace()
+    useEffect(()=>{
+        if(balance.state=='hasValue'){
+            setBalance(balance.contents)
+ 
+        }
+    },[balance])
+    
 
  
 
-    return <Card title={"Balance"}>
+    return <div className="w-full "> <Card title={"Balance"}>
         <div className="flex justify-between border-b border-slate-300 pb-2">
-            <div>
+            <div onClick={resetBalance} >
                 Unlocked balance  
             </div>
             <div>
@@ -50,8 +54,8 @@ export const BalanceCard = ({amount, locked}: {
                 Total Balance
             </div>
             <div>
-                {(locked + amount) / 100} CAD
+                {(balanceToDisplay.locked + balanceToDisplay.amount) / 100} CAD
             </div>
         </div>
-    </Card>
+    </Card></div>
 }

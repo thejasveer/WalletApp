@@ -23,13 +23,14 @@ export const authOptions = {
             });
               
             if (existingUser) {
-                console.log("exist")
+      
                 const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
                 if (passwordValidation) {
                     return {
                         id: existingUser.id.toString(),
                         name: existingUser.name,
                         number: existingUser.number,
+                        email:existingUser.email,
                         netbankingLoginToken:existingUser.netbankingLoginToken
                     }
                 }
@@ -69,6 +70,8 @@ export const authOptions = {
                     id: user.id.toString(),
                     name: user.name,
                     number: user.number,
+                    email:user.email,
+                    netbankingLoginToken: user.netbankingLoginToken
                   }
             } catch(e) {
 
@@ -89,9 +92,9 @@ export const authOptions = {
                 }
             });
             session.user.id = token.sub
-            session.user.number = token.number
-            session.user.name = token.name
-            session.user.email = token.email
+            session.user.number =user?.number
+            session.user.name = user?.name
+            session.user.email = user?.email
             session.user.netbankingLoginToken = user?.netbankingLoginToken
             return session
         }

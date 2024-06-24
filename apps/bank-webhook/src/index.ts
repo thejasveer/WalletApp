@@ -7,10 +7,11 @@ app.use(cors())
 app.use(express.json())
 import {RampStatus} from '@prisma/client'
  
+ 
 
 app.post('/bankWebhook',async (req,res)=>{
     const params =req.body;
-    console.log(params)
+   
     const {success} = bankWebhookSchema.safeParse(params)
     try {
         if(success){
@@ -36,10 +37,10 @@ app.post('/bankWebhook',async (req,res)=>{
             }
 
             if(txn && payload.status== 'Success'){
-                console.log(payload)
+             
                
                 if(txn.type=='ON_RAMP'){
-                    console.log(txn)
+                 
                     await db.$transaction(async(tx)=>{[
                     
                         await db.balance.update({
@@ -114,3 +115,4 @@ const port = 3002
 app.listen(port,()=>{
     console.log("Web server running on port "+ port)
 })
+ 

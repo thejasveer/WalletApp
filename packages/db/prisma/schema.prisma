@@ -35,6 +35,7 @@ model RampTransaction {
   provider  String?
   paymentId String?    @unique
   amount    Int
+  balance   Int?
   startTime DateTime
   userId    Int
   user      User       @relation(fields: [userId], references: [id])
@@ -68,6 +69,7 @@ enum RampStatus {
 model p2pTransfer {
   id         Int      @id @default(autoincrement())
   amount     Int
+  balance    Int?
   timestamp  DateTime
   fromUserId Int
   fromUser   User     @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])

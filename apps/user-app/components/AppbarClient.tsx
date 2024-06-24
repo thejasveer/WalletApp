@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 export default function Page(): JSX.Element {
   const session = useSession();
   const router = useRouter();
+  if(!session){
+    signIn()
+  }
   return (
+
    <div>
       <Appbar onSignin={signIn} onSignout={async () => {
         await signOut()

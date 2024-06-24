@@ -1,32 +1,32 @@
 
-import {  selector   } from "recoil";
-import db from "@repo/db/client"
+import {  atom, selector   } from "recoil";
+
 import { userAtom } from "./user";
- 
+ import axios from 'axios'
 export const balanceAtom = selector ({
-    key:"myBlogAtom",
-    get:  async (prop) => {
+    key:"balanceAtom",
+    get:  async ({get}) => {
 
-        const user = prop.get(userAtom)
-
-        if(!user) return {
-            amount:  0,
-            locked:   0
-        }
+        const user =  get(userAtom)
       
-        // get(MyBlogsTrigger);
-        const {id}= user;
-        const balance = await db.balance.findFirst({
-            where: {
-                userId: Number(id)
+         get(balanceTriggerAtom)
+        if(!user){
+            return {
+                amount:  0,
+                locked:   0
             }
-        });
-        return {
-            amount: balance?.amount || 0,
-            locked: balance?.locked || 0
+        }else{
+            const balance: any =  await axios.get('/api/user/balance');
+            return  balance.data
         }
+         
+      
    
     },
    
     })
  
+export const balanceTriggerAtom = atom({
+key:"balanceTriggerAtom",
+default:0
+})

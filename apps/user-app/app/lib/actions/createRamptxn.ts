@@ -6,13 +6,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import { SignJWT } from "jose";
 import { signIn } from "next-auth/react";
+import { getBalance } from "./getBalance";
 
 
  
 export async function createRampTransaction(type: RampType, amount: number) {
     // Ideally the token should come from the banking provider (hdfc/axis)
+    
     const session = await getServerSession(authOptions);
-    console.log(session)
+    const balance:any = await getBalance()
     if (!session?.user || !session.user?.id) {
        signIn()
     }
@@ -28,11 +30,12 @@ export async function createRampTransaction(type: RampType, amount: number) {
     await prisma.rampTransaction.create({
         data: {
             type:type,
-            status: "Processing",
+            status: RampStatus.INITIATED,
             startTime: new Date(),
             token: token,
             userId: Number(session?.user?.id),
-            amount: amount * 100
+            amount: amount * 100,
+            balance:balance.amount
         }
     });
 
