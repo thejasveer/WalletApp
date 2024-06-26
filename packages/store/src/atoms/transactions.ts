@@ -5,7 +5,7 @@ import { userAtom } from "./user";
  import axios from 'axios'
 export const transactionsAtom = selector ({
     key:"transactionsAtom",
-    get:  async ({get}) => {
+    get: async ({get}) => {
         const user =  get(userAtom)
     
         if(!user){

@@ -2,15 +2,11 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import db from "@repo/db/client";
- 
+import {z} from 'zod'
 export async function p2pTransfer(to: string, amount: number) {
 
     const session = await getServerSession(authOptions);
     const from = session?.user?.id;
-
- 
-
-
     if (!from) {
         return {
             success:false,

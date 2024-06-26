@@ -8,28 +8,7 @@ import { Card } from "@repo/ui/card";
 import { BalanceCard } from "../../../components/BalanceCard";
 import { getBalance } from "../../lib/actions/getBalance";
 import { PageTitle } from "../../../components/PageTitle";
-async function getP2pTransactions() {
-
-//test deddccd
  
-    const session = await getServerSession(authOptions);
-    const txns = await prisma.p2pTransfer.findMany({
-        where:  {
-            OR: [
-              { toUserId:Number(session?.user?.id )},
-              { fromUserId: Number(session?.user?.id )},
-            
-            ],
-          },
-    });
-    return txns.map((t:any) => ({
-        time: t.timestamp,
-        amount: t.amount,
-       from:t.fromUserId,
-       to:t.toUserId,
-      
-    }))
-}
 export default async function(){
 const transactions:any = await getTrasactions()
  const balance:any  = await getBalance();

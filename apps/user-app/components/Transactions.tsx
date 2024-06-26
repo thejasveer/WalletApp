@@ -5,6 +5,7 @@ import { useRecoilValue, userAtom } from "@repo/store"
 import { useTransactions } from "../hooks/useTransactions"
 import { Button } from "@repo/ui/button"
 import { Center } from "@repo/ui/center"
+import { Pill } from "./Pill"
  
 
 export const Transactions =({
@@ -22,14 +23,32 @@ export const Transactions =({
 
 
     useEffect(()=>{
-
-        if(type!='p2p'){
-            // setTransacitionsToDisplay(currTransactions.p2pTransaction)
+        
+        let timer:any;
+        if(currTransactions.state=='hasValue'){
+          
+            if(type=='p2p'){
+                setTransacitionsToDisplay({transactions:currTransactions.contents.p2pTransaction,type:"p2p"})
+        
+            }else{
+                setTransacitionsToDisplay({transactions:currTransactions.contents.rampTransaction
+                    ,type:"transfer"})
+        
+             }
+         
     
+    
+           timer = setTimeout(()=>{
+            resetTransactions()
+            },2000)
         }
+     
+
+        return ()=> clearTimeout(timer)
+
     },[currTransactions])
    
-    console.log(transactionsToDisplay)
+ 
     if (!transactionsToDisplay.transactions) {
         return  <div className="text-center pb-8 pt-8">
                 No Recent transactions
@@ -40,31 +59,19 @@ export const Transactions =({
 
     return   <div className="pt-2 overflow-scroll h-1/2">
             
-            {transactionsToDisplay?.transactions.map((t:any,i:number) => <div>
+            {transactionsToDisplay?.transactions.map((t:any,i:number) => <div key={i}>
               
               <Transaction 
+              
               heading={t.heading}
-              date= {t.date.toDateString()}
+              date= {t.date}
               amount={t.amount / 100}
               balance={t.balance}
               type={t.type}
+              status={t.status}
               ></Transaction> 
               
-                {/* <div className="flex justify-between">
-                <div>
-                    <div className="text-sm">
-                    {(type=='p2p') ? (t.from==Number(user?.id))?'Transfered':'Recieved': '  Received CAD'}  
-                    </div>
-                    <div className="text-slate-600 text-xs">
-                        {t.time.toDateString()}
-                    </div>
-                </div>
-                <div className={`flex flex-col justify-center ${t.type="ON_RAMP"?'text-green-500':''} `}>
-                    + ${t.amount / 100}
-                </div>
-
-            </div> */}
-           
+                
             </div>
             
              )}
@@ -73,8 +80,24 @@ export const Transactions =({
    
 }
 
-function Transaction({heading,date,amount,balance,type}:{type?:string;heading?:string,date?:string,amount?:number,balance?:number}){
-
+function Transaction({heading,date,amount,balance,type,status}:{status:string;type?:string;heading?:string,date?:string,amount?:number,balance?:number}){
+    const [pillClass,setPillClass] = useState("")
+    useEffect(()=>{
+        
+        switch(status){
+            case "SUCCESS":
+                setPillClass("text-green-600")
+                break;
+                case "INITIATED":
+                 setPillClass("text-yellow-400")
+                 break;
+                case "FAILED":
+                setPillClass("text-red-500")
+                break;
+                case "PROCCESSING":
+                setPillClass("text-orange-500")    
+        }
+    },[])
 
     return  <div className="flex justify-between mb-4">
             <div className="flex gap-3 items-center">
@@ -84,11 +107,16 @@ function Transaction({heading,date,amount,balance,type}:{type?:string;heading?:s
         </svg>
         <div className="flex flex-col">
              <div className="text-sm font-semibold">{heading} </div>
-              <div className="text-slate-400 text-xs">{date}</div>
+             <div className="flex gap-2  items-center text-xs">
+             <div className="text-slate-400 ">{date}</div> <div>|</div>
+
+             <Pill fill={pillClass} onclick={()=>{}} selected={true} title={status}/>
+             </div>
+   
         </div>
          </div>
         <div className="flex flex-col text-right">
-             <div className="text-slate-600 text-sm font-semibold">{type!='ON_RAMP'?'-':''} {amount} CAD</div>
+             <div className="text-slate-600 text-sm font-semibold">{type!='ON_RAMP'?'-':''}{amount} CAD</div>
         <div className="text-slate-400 text-xs">{balance} CAD</div>
         </div>
 

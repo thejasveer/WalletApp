@@ -18,14 +18,15 @@ export function P2p() {
     const {bark} = useMessage()
 
     function validate(){
+        if(number==""){
+            bark({message:"Please enter a valid peer number",success:false})
+            return false;
+        }
         if(isNaN(amount)||amount<=0){
             bark({message:"please enter a valid amount",success:false})
             return false;
         }
-        if(number==""){
-            bark({message:"please enter a valid amount",success:false})
-            return false;
-        }
+       
         handleP2pTransfer()
     }
 

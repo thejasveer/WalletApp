@@ -58,9 +58,11 @@ export default async function() {
     return <div className="w-screen">
        <PageTitle title="Transfer" />
         <div className="flex flex-col p-4">
+
             <div className="flex gap-2 ">
-                <AddMoney />
-                <BalanceCard  amount={balance.amount} locked={balance.locked} />
+                <AddMoney   />
+                 <BalanceCard  amount={balance.amount} locked={balance.locked} /> 
+               
             </div>
             <div>
                

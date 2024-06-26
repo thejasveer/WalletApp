@@ -23,16 +23,23 @@ export const BalanceCard = ({amount, locked}: {
 
     const {balance,resetBalance} =  useBalanace()
     useEffect(()=>{
+        let timer:any;
+
+
         if(balance.state=='hasValue'){
-            setBalance(balance.contents)
+           timer= setTimeout(() => {
+                setBalance(balance.contents)
+            }, 2000);
+          
  
         }
+        return  ()=>clearTimeout(timer)
     },[balance])
     
 
  
 
-    return <div className="w-full "> <Card title={"Balance"}>
+    return <div className="w-full mt-10"> <Card title={"Balance"}>
         <div className="flex justify-between border-b border-slate-300 pb-2">
             <div onClick={resetBalance} >
                 Unlocked balance  

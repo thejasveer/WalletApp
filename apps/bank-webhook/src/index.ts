@@ -34,9 +34,10 @@ app.post('/bankWebhook',async (req,res)=>{
                 res.status(411).json({
                     message: "Transaction not found."
                 })
-            }
+            };
+            
 
-            if(txn && payload.status== 'Success'){
+            if(txn && payload.status== RampStatus.SUCCESS){
              
                
                 if(txn.type=='ON_RAMP'){
@@ -54,7 +55,7 @@ app.post('/bankWebhook',async (req,res)=>{
                                 token: payload.token
                             }, 
                             data: {
-                                status:  payload.status,
+                                status:payload.status  ,
                             }
                         })
                     ]}); 
@@ -86,7 +87,7 @@ app.post('/bankWebhook',async (req,res)=>{
                         token: payload.token
                     }, 
                     data: {
-                        status: payload.status,
+                        status:  payload.status,
                     }
                 })
             ]); 

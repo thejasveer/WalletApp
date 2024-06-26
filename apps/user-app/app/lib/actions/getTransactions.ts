@@ -17,6 +17,10 @@ export  const  getTrasactions = async (count:number = -1) => {
         where:{
             userId:userId
         },
+        orderBy:{
+          id:'desc'
+        },
+      
         take:(count==-1)?undefined:count
     })
     const p2pTransaction = await db.p2pTransfer.findMany({
@@ -26,10 +30,9 @@ export  const  getTrasactions = async (count:number = -1) => {
               { fromUserId: userId},
             
             ],
-
-          
-          },
+           },
           select:{
+         
             amount:true,
             balance:true,
             timestamp:true,
@@ -37,24 +40,29 @@ export  const  getTrasactions = async (count:number = -1) => {
             fromUser:true,
             fromUserId:true
           },
+          orderBy:{
+            id:'desc'
+          },
         
           take:(count==-1)?undefined:count
           
     })
     console.log(p2pTransaction)
     return  {rampTransaction:rampTransaction.map((t:any) => ({
-              date  : t.startTime,
+              date  : t.startTime.toDateString(),
               amount: t.amount,
               status: t.status,
-              balance: t.balance,
+              balance: t.balance/100,
               heading:t.type=='OFF_RAMP'?'Withdraw':'Deposit',
-              type:t.type
+              type:t.type, 
+             
           })),p2pTransaction:p2pTransaction.map((t:any) => ({
-            date: t.timestamp,
+            date: t.timestamp.toDateString(),
             amount:  t.amount,
             heading:userId==Number(t.fromUserId)?("Transfered to "+t.toUser.name):(("Received   from "+t.fromUser.name)),
-            balance:t.balance,
-            type:userId==t.fromUserId?'OFF_RAMP':'ON_RAMP'
+            balance:t.balance/100,
+            type:userId==t.fromUserId?'OFF_RAMP':'ON_RAMP',
+            status:'SUCCESS'
           
         }))}
  }catch(error){
