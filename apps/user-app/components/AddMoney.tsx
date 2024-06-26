@@ -58,10 +58,8 @@ export const AddMoney = () => {
                 const checkWindowClosedInterval = setInterval(() => {
                     if (newWindow.closed) {
                         clearInterval(checkWindowClosedInterval);
-                        resetBalance()
                         setAmount(0);
-                        
-                    }
+                      }
                 }, 1000); // Check every second
             } else {
                 bark({message:"Failed to open new window. Please allow pop-ups for this site.",success:false})

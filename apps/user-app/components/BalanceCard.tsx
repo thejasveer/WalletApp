@@ -19,7 +19,7 @@ export const BalanceCard = ({amount, locked}: {
  
 }) => {
    
-    const [balanceToDisplay,setBalance] = useState<Balance>({amount:0,locked:0})
+    const [balanceToDisplay,setBalance] = useState<Balance>({amount:amount,locked:locked})
 
     const {balance,resetBalance} =  useBalanace()
     useEffect(()=>{
@@ -27,8 +27,9 @@ export const BalanceCard = ({amount, locked}: {
 
 
         if(balance.state=='hasValue'){
+            setBalance(balance.contents)
            timer= setTimeout(() => {
-                setBalance(balance.contents)
+            // resetBalance()
             }, 2000);
           
  

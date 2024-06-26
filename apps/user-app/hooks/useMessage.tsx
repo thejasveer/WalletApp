@@ -32,8 +32,9 @@ export const useMessage=()=>{
     }
 
     function bark(res:{message:string;success:boolean}|undefined){
-        if(res) 
+        if(!res) return ;
         if(res.success){
+         
             success(res.message)
         }else{
             error(res.message)

@@ -47,7 +47,7 @@ export  const  getTrasactions = async (count:number = -1) => {
           take:(count==-1)?undefined:count
           
     })
-    console.log(p2pTransaction)
+    
     return  {rampTransaction:rampTransaction.map((t:any) => ({
               date  : t.startTime.toDateString(),
               amount: t.amount,

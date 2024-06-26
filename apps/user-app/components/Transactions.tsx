@@ -39,7 +39,7 @@ export const Transactions =({
     
     
            timer = setTimeout(()=>{
-            resetTransactions()
+            // resetTransactions()
             },2000)
         }
      

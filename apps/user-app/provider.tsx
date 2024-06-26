@@ -4,6 +4,7 @@ import { SessionProvider, signIn, useSession } from "next-auth/react";
 import { ReactNode, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { redirect, usePathname } from "next/navigation";
+import { useWebSocket } from "./hooks/useWebsocket";
 export const Providers = ({children}: {children: React.ReactNode}) => {
     return <RecoilRoot>
         <SessionProvider>
@@ -16,6 +17,7 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
     const { data: session, update } = useSession(  );
     
         const currentLoggedInUser = session?.user;
+        const {sendMessage} = useWebSocket("ws://localhost:3002",currentLoggedInUser?.id)
         
         const setCurrentUser = useSetRecoilState(userAtom)
 
@@ -33,6 +35,8 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
                         id: currentLoggedInUser.id,
                         netbankingLoginToken: currentLoggedInUser.netbankingLoginToken
                     }));
+
+                    
                 } 
             }else{
              

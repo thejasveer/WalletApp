@@ -36,14 +36,13 @@ export function P2p() {
 
         }
         setLoading(true)
-      const r =     await p2pTransfer(number, Number(amount) * 100)
+        const r =     await p2pTransfer(number, Number(amount) * 100)
         bark(r)
         setLoading(false)
      
     }
 
     return <div className="h-max w-full ">
-        
             <Card title="Send">
                 <div className="min-w-72 pt-2">
                     <TextInput  placeholder={"Number"} label="Number" onChange={(value) => {

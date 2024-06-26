@@ -14,7 +14,7 @@ export const transactionsAtom = selector ({
             get(transactionsTriggerAtom)
          
     
-            const transactions: any =  await axios.get('/api/user/transactions');
+            const transactions: any =  await axios.get('/api/user/transactions?count=4');
             return  transactions.data
         }
    
