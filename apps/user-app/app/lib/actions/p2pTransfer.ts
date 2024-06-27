@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import db from "@repo/db/client";
 import {z} from 'zod'
+import axios from "axios";
 export async function p2pTransfer(to: string, amount: number) {
 
     const session = await getServerSession(authOptions);
@@ -61,12 +62,16 @@ export async function p2pTransfer(to: string, amount: number) {
                 balance:fromBalance.amount
             }
           })
-          return {
-            success:true, 
-            message:"Transfer successfull"
-           }
 
-    });
+          await axios.post('http://localhost:3002/sendNotification', {
+            userId:Number(toUser.id),
+            message:"$"+amount/100+" credited to your account."
+          });
+      });
+    return {
+      success:true, 
+      message:"Transfer successfull"
+     }
     } catch (error:any) {
         return {
          success:false, 

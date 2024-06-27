@@ -12,36 +12,6 @@ import { getTrasactions } from "../../lib/actions/getTransactions";
 import { redirect } from "next/navigation";
 import { PageTitle } from "../../../components/PageTitle";
  
-// async function getBalance() {
-//     const session = await getServerSession(authOptions);
-//     const balance =  await prisma.balance.findFirst({
-//         where: {
-//             userId: Number(session?.user?.id)
-//         }
-//     });
-//     return {
-//         amount: balance?.amount || 0,
-//         locked: balance?.locked || 0
-//     }
-// }
-
-// async function getOnRampTransactions() {
-//     const session = await getServerSession(authOptions);
- 
-//     const txns = await prisma.rampTransaction.findMany({
-//         where: {
-//             userId: Number(session?.user?.id)
-//         },
-//         take: 4,
-//     });
-//     return txns.map((t:any) => ({
-//         time: t.startTime,
-//         amount: t.amount,
-//         status: t.status,
-//         provider: t.provider,
-//         type:t.type
-//     }))
-// }
 
 export default async function() {
         const session = await getServerSession(authOptions);
@@ -55,11 +25,11 @@ export default async function() {
  
  
 
-    return <div className="w-screen">
+    return <div className="w-full">
        <PageTitle title="Transfer" />
-        <div className="flex flex-col p-4">
+        <div className="flex flex-col  ">
 
-            <div className="flex gap-2 ">
+            <div className="flex flex-col-reverse sm:flex-row gap-5 ">
                 <AddMoney   />
                  <BalanceCard  amount={balance.amount} locked={balance.locked} /> 
                
@@ -69,7 +39,7 @@ export default async function() {
                 <div className="pt-4">
                {  <Card title="Recent Transactions">
                  
-                 <Transactions type="transfer" transactions={transactions.rampTransaction}/>   
+                 <Transactions count={4} type="transfer" transactions={transactions.rampTransaction}/>   
                  
                   </Card> } 
              

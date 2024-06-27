@@ -2,17 +2,16 @@
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
  
-import { Select } from "@repo/ui/select";
 import { useEffect, useState } from "react";
 import { TextInput } from "@repo/ui/textinput";
 import { createRampTransaction } from "../app/lib/actions/createRamptxn";
 import {  useSession } from "next-auth/react";
-import { SignJWT } from "jose";
-import { useBalanace } from "../hooks/useBalance";
+ 
+ 
 import { useMessage } from "../hooks/useMessage";
 import { Pill } from "./Pill";
- 
-import RampType  from '@repo/db/client'
+import { useTransactions } from "../hooks/useTransactions";
+  
 //test edwd
 
 export const AddMoney = () => {
@@ -22,17 +21,17 @@ export const AddMoney = () => {
 
     let [url,setUrl] = useState(process.env.NEXT_PUBLIC_NETBANKING_URL);
      const [amount, setAmount] = useState(0);
-    const {resetBalance} = useBalanace();
+    
     const [type,setType]= useState<"ON_RAMP" | "OFF_RAMP">("ON_RAMP")
     useEffect(()=>{
        
 
     },[])
- 
+    const {resetTransactions} = useTransactions(4)
     function popupWindow(url:string, windowName:string, win:any,w:number, h:number) {
         const y = win.top.outerHeight / 2 + win.top.screenY - ( h / 2);
         const x = win.top.outerWidth / 2 + win.top.screenX - ( w / 2);
-        return win.open(url, windowName, `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);ß
+        return win.open(url, windowName, `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`); 
     }
 
     const validate = ()=>{
@@ -48,6 +47,7 @@ export const AddMoney = () => {
                 bark({success:res.success,message:res.message})
                 return false;
             }
+            resetTransactions()
             const params = new URLSearchParams({
             paymentToken: res.token,
             token:user.netbankingLoginToken,
@@ -65,8 +65,6 @@ export const AddMoney = () => {
                 bark({message:"Failed to open new window. Please allow pop-ups for this site.",success:false})
                 
             }
-          
-
         }
  
 
@@ -74,10 +72,7 @@ export const AddMoney = () => {
         <div className="flex gap-3 items-center  text-sm ">
          <Pill title={'Deposit'} selected={type =="ON_RAMP"} onclick={()=>setType("ON_RAMP")} />
            <Pill title={'Withdraw'} selected={type =="OFF_RAMP"} onclick={()=>setType("OFF_RAMP")} />
-         
-
-
-        </div>
+         </div>
          <Card title="">
 
             <div className="w-full">
@@ -87,7 +82,7 @@ export const AddMoney = () => {
             
                 <div className="flex justify-center pt-4">
                     <Button onClick={validate}>
-                    Add Money
+                   {type=='ON_RAMP'?'Add':'Withdraw'} Money
                     </Button>
                 </div>
             </div>

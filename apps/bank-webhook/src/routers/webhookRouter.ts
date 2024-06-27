@@ -11,8 +11,7 @@ export const webhookRouter = express.Router();
 
 webhookRouter.post('/bankWebhook',async (req,res)=>{
     const params =req.body;
-   
-    const {success} = bankWebhookSchema.safeParse(params)
+ const {success} = bankWebhookSchema.safeParse(params)
     try {
         if(success){
             const payload: {
@@ -117,9 +116,7 @@ webhookRouter.post('/bankWebhook',async (req,res)=>{
                 const message= type+" transaction of $"+txn.amount/100+" was "+status.title;
                 sendMessage(txn.userId,{message:message,"success": status.success})
             }
-              
-             
-            }
+        }
            
             res.status(200).json({
                 message: "Captured"
@@ -140,9 +137,13 @@ webhookRouter.post('/bankWebhook',async (req,res)=>{
     
 
 });
-
-
-webhookRouter.get('/sendmesssage',()=>{
-    const message= "Withdraw transaction of $"+22+" was successfull."
-    sendMessage(2,{message:message,"success":true})
+ 
+webhookRouter.post('/sendNotification',async(req,res)=>{
+    const data= req.body;
+    console.log(data)
+  
+    sendMessage(data.userId,{message:data.message,"success":true})
+    res.status(200).json({
+        message: "Captured"
+    })
 })

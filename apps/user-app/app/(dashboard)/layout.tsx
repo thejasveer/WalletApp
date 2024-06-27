@@ -3,22 +3,23 @@ import { SidebarItem } from "../../components/SidebarItem";
 
 export default function Layout({
   children,
+  
 }: {
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <div className="relative    p-6  rounded-lg shadow-md  ">
+    <div className="relative      rounded-lg shadow-md  ">
       
-    <div className="flex ">
-        <div className="w-72 border-r border-slate-300 min-h-screen mr-4 pt-28">
-            <div>
+    <div className="  flex">
+        <div className=" fixed bottom-0 bg-white sm:bg-transparent left-0 right-0   sm:static sm:w-72 border-r border-slate-300 h-20 sm:min-h-screen sm:mr-4  sm:pt-28">
+            <div className="flex justify-evenly sm:flex-col  p-5">
                 <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
                 <SidebarItem href={"/transfer"} icon={<TransferIcon />} title="Transfer" />
                 <SidebarItem href={"/transactions"} icon={<TransactionsIcon />} title="Transactions" />
                 <SidebarItem href={"/p2p"} icon={<P2P />} title="P2P Transfer" />
             </div>
         </div>
-            {children}
+        <div className="w-full p-5 overflow-auto mb-20" >{children}</div>
             
     </div>
     {/* <Loader/> */}

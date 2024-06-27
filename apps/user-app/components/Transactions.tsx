@@ -1,33 +1,38 @@
 "use client"
-import { Card } from "@repo/ui/card"
+ 
 import { useEffect, useState } from "react"
 import { useRecoilValue, userAtom } from "@repo/store"
 import { useTransactions } from "../hooks/useTransactions"
 import { Button } from "@repo/ui/button"
 import { Center } from "@repo/ui/center"
 import { Pill } from "./Pill"
+import { Filter } from "./Filter"
+import { usePathname, useRouter } from "next/navigation"
  
 
 export const Transactions =({
     transactions,
     type,
+    count
     
-}: {transactions: any,type:string; 
+}: {transactions: any,type:string; count:number
 }) => {
  
-    const user= useRecoilValue(userAtom);
+    // const user= useRecoilValue(userAtom);
     const [typeSelected,setTypeSelected] = useState(type)
     const [transactionsToDisplay,setTransacitionsToDisplay] = useState({transactions:transactions,type})
-
-    const {currTransactions,resetTransactions} = useTransactions()
+    const router= useRouter()
+    const pathname = usePathname()
+    const {currTransactions} = useTransactions(count)
 
 
     useEffect(()=>{
-        
-        let timer:any;
+        console.log(pathname)
+        console.log(typeSelected)
+       
         if(currTransactions.state=='hasValue'){
-          
-            if(type=='p2p'){
+        
+            if(typeSelected=='p2p'){
                 setTransacitionsToDisplay({transactions:currTransactions.contents.p2pTransaction,type:"p2p"})
         
             }else{
@@ -36,17 +41,12 @@ export const Transactions =({
         
              }
          
-    
-    
-           timer = setTimeout(()=>{
-            // resetTransactions()
-            },2000)
-        }
-     
+      }
+ 
 
-        return ()=> clearTimeout(timer)
+    },[currTransactions,typeSelected])
 
-    },[currTransactions])
+ 
    
  
     if (!transactionsToDisplay.transactions) {
@@ -57,9 +57,17 @@ export const Transactions =({
     }
 
 
-    return   <div className="pt-2 overflow-scroll h-1/2">
-            
-            {transactionsToDisplay?.transactions.map((t:any,i:number) => <div key={i}>
+    return   <div className="pt-2   flex-1   ">
+             { pathname=='/transactions'&&  <div className="flex px-2 mb-5">
+                  <Filter label={"Types"} items={
+                    [{name:"Transfer",action:()=>setTypeSelected('transfer')},
+                        {name:"P2P transfer",action:()=>setTypeSelected('p2p')}
+                        ]} 
+                    action={()=>{}}/>
+                </div>  }
+
+            <div>
+            { transactionsToDisplay?.transactions.map((t:any,i:number) => <div key={i}>
               
               <Transaction 
               
@@ -75,7 +83,9 @@ export const Transactions =({
             </div>
             
              )}
-             <Center> <Button onClick={()=>0}> View all transactions</Button></Center>
+            </div>
+           
+           {count>0 &&  <div className=""> <Button onClick={()=>router.push('/transactions')}> View all transactions</Button></div>} 
         </div>
    
 }
@@ -86,16 +96,16 @@ function Transaction({heading,date,amount,balance,type,status}:{status:string;ty
         
         switch(status){
             case "SUCCESS":
-                setPillClass("text-green-600")
+                setPillClass(" text-green-400")
                 break;
                 case "INITIATED":
-                 setPillClass("text-yellow-400")
+                 setPillClass("  text-yellow-400")
                  break;
                 case "FAILED":
-                setPillClass("text-red-500")
+                setPillClass("  text-red-600")
                 break;
                 case "PROCCESSING":
-                setPillClass("text-orange-500")    
+                setPillClass(" text-orange-500")    
         }
     },[])
 

@@ -15,8 +15,10 @@ export function startWebSocketServer(server: any){
         let userId: string | null = null;
     //on message
     ws.on('message',(message)=>{
+
         try {
             const data = JSON.parse(message.toString())
+            
             if (data.userId) {
                 userId = data.userId;
                 if (userId) {

@@ -1,22 +1,20 @@
 
-import {  atom, selector   } from "recoil";
+import {  atom, selector, selectorFamily   } from "recoil";
 
 import { userAtom } from "./user";
  import axios from 'axios'
-export const transactionsAtom = selector ({
+export const transactionsAtom = selectorFamily ({
     key:"transactionsAtom",
-    get: async ({get}) => {
+    get:  (count) => async ({get}) => {
         const user =  get(userAtom)
     
-        if(!user){
-            return {}
-        }else{
+  
             get(transactionsTriggerAtom)
          
     
-            const transactions: any =  await axios.get('/api/user/transactions?count=4');
+            const transactions: any =  await axios.get('/api/user/transactions?count='+count);
             return  transactions.data
-        }
+    
    
    
     },

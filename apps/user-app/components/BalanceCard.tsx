@@ -3,10 +3,10 @@
  
 
 import { Card } from "@repo/ui/card";
-import {   useSession } from "next-auth/react";
+ 
 import { useEffect, useState } from "react";
-import { useBalanace } from "../hooks/useBalance";
-
+import { useBalance } from "../hooks/useBalance";
+ 
 interface Balance{
     amount:number;
     locked:number
@@ -21,20 +21,15 @@ export const BalanceCard = ({amount, locked}: {
    
     const [balanceToDisplay,setBalance] = useState<Balance>({amount:amount,locked:locked})
 
-    const {balance,resetBalance} =  useBalanace()
-    useEffect(()=>{
-        let timer:any;
-
-
-        if(balance.state=='hasValue'){
-            setBalance(balance.contents)
-           timer= setTimeout(() => {
-            // resetBalance()
-            }, 2000);
-          
+    const {balance,resetBalance} =  useBalance()
  
+    useEffect(()=>{
+        
+         if(balance.state=='hasValue'){
+            setBalance(balance.contents)
+    
         }
-        return  ()=>clearTimeout(timer)
+        
     },[balance])
     
 

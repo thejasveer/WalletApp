@@ -15,14 +15,14 @@ const transactions:any = await getTrasactions()
     return   <div className="w-full ">
         <PageTitle title="P2P Transfer" />
         <div className="flex flex-col gap-2  ">
-             <div className="  flex gap-2" >
+             <div className="  flex flex-col-reverse sm:flex-row gap-5" >
 
                 <P2p/>
                 {balance  && <BalanceCard amount={balance.amount} locked={balance.locked}/>}
             
             </div>
             <div className="w-full">
-                <Card title="Recent"> <Transactions type="p2p" transactions={transactions.p2pTransaction}/></Card>
+                <Card title="Recent"> <Transactions count={4} type="p2p" transactions={transactions.p2pTransaction}/></Card>
 
             </div>  
         </div>
