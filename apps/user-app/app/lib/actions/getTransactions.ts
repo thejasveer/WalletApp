@@ -5,6 +5,7 @@ import { authOptions } from '../auth';
 import { signIn } from 'next-auth/react';
 
 export  const  getTrasactions = async (count:number = -1) => {
+  console.log("countfrom ",count)
  try{
     const session = await getServerSession(authOptions);
     
@@ -38,7 +39,8 @@ export  const  getTrasactions = async (count:number = -1) => {
             timestamp:true,
             toUser:true,
             fromUser:true,
-            fromUserId:true
+            fromUserId:true,
+            toBalance:true
           },
           orderBy:{
             id:'desc'
@@ -60,7 +62,7 @@ export  const  getTrasactions = async (count:number = -1) => {
             date: t.timestamp.toDateString(),
             amount:  t.amount,
             heading:userId==Number(t.fromUserId)?("Transfered to "+t.toUser.name):(("Received   from "+t.fromUser.name)),
-            balance:t.balance/100,
+            balance:userId== Number(t.fromUserId)?t.balance/100:t.toBalance/100,
             type:userId==t.fromUserId?'OFF_RAMP':'ON_RAMP',
             status:'SUCCESS'
           

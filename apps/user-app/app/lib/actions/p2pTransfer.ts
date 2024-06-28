@@ -2,8 +2,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import db from "@repo/db/client";
-import {z} from 'zod'
+
 import axios from "axios";
+import { resolve } from "path";
 export async function p2pTransfer(to: string, amount: number) {
 
     const session = await getServerSession(authOptions);
@@ -17,7 +18,16 @@ export async function p2pTransfer(to: string, amount: number) {
     const toUser = await db.user.findFirst({
         where: {
             number: to
+        },
+        select:{
+          id:true,
+          Balance:{
+            select:{
+              amount:true
+            }
+            }
         }
+        
     });
 
  
@@ -43,6 +53,9 @@ export async function p2pTransfer(to: string, amount: number) {
           if (!fromBalance || fromBalance.amount < amount) {
             throw new Error('Insufficient funds. Please add some funds.');
           }
+          if (!fromBalance || (fromBalance.amount-fromBalance.locked) < amount) {
+            throw new Error('Insufficient funds. $'+fromBalance.locked/100+' is locked due to some pending transaction (Withdrew transactions). Please add some funds.');
+          }
 
           await tx.balance.update({
             where: { userId: Number(from) },
@@ -59,15 +72,18 @@ export async function p2pTransfer(to: string, amount: number) {
                 fromUserId:Number(from),
                 toUserId:Number(toUser.id),
                 timestamp:new Date(),
-                balance:fromBalance.amount
+                balance:fromBalance.amount,
+                toBalance:toUser.Balance?.amount
             }
           })
-
-          await axios.post('http://localhost:3002/sendNotification', {
+       
+          await axios.post(process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification', {
             userId:Number(toUser.id),
             message:"$"+amount/100+" credited to your account."
           });
       });
+      await new Promise((resolve)=>{ setTimeout(()=>{resolve("")},3000)})
+
     return {
       success:true, 
       message:"Transfer successfull"

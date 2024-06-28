@@ -3,7 +3,7 @@ import { useMessage } from './useMessage';
 import {  useBalance } from './useBalance';
 import { useTransactions } from './useTransactions';
 
-export function useWebSocket(url:string,userId:number|null|undefined) {
+export function useWebSocket(url:string|undefined,userId:number|null|undefined) {
   const [messages, setMessages] = useState<{ userId:number, token:string, status :string}|null>(null);
   const ws = useRef<WebSocket | null>(null);
   const {bark} = useMessage()
@@ -12,8 +12,10 @@ export function useWebSocket(url:string,userId:number|null|undefined) {
 
   useEffect(() => {
  
-    if(userId)  
+    if(userId&& url)  
   {  
+  console.log(url,"Ss")
+   
    
     ws.current = new WebSocket(url);
 
@@ -41,6 +43,7 @@ export function useWebSocket(url:string,userId:number|null|undefined) {
     ws.current.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
+ 
 }
     return () => {
       if (ws.current) {

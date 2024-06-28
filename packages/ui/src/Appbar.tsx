@@ -1,3 +1,4 @@
+import { Logo } from "./Logo";
 import { Button } from "./button";
 
 interface AppbarProps {
@@ -19,10 +20,8 @@ export const Appbar = ({
         // onSignin()
 
     }
-    return <div className="flex justify-between border-b px-4 ">
-        <div className="text-lg flex flex-col justify-center">
-            PayTM
-        </div>
+    return <div className="flex justify-between border-b border-slate-300 px-5 sm:px-12 ">
+        <Logo/>
         <div className="flex flex-col justify-center pt-2">
             <Button onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</Button>
         </div>

@@ -11,6 +11,7 @@ import {  useSession } from "next-auth/react";
 import { useMessage } from "../hooks/useMessage";
 import { Pill } from "./Pill";
 import { useTransactions } from "../hooks/useTransactions";
+import { useBalance } from "../hooks/useBalance";
   
 //test edwd
 
@@ -28,6 +29,7 @@ export const AddMoney = () => {
 
     },[])
     const {resetTransactions} = useTransactions(4)
+    const {resetBalance} = useBalance()
     function popupWindow(url:string, windowName:string, win:any,w:number, h:number) {
         const y = win.top.outerHeight / 2 + win.top.screenY - ( h / 2);
         const x = win.top.outerWidth / 2 + win.top.screenX - ( w / 2);
@@ -48,6 +50,7 @@ export const AddMoney = () => {
                 return false;
             }
             resetTransactions()
+            resetBalance()
             const params = new URLSearchParams({
             paymentToken: res.token,
             token:user.netbankingLoginToken,

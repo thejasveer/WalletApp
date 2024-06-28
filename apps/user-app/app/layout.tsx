@@ -7,6 +7,8 @@ import AppbarClient from "../components/AppbarClient";
 import { Loader } from "../components/Loader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getServerSession } from "next-auth";
+import { authOptions } from "./lib/auth";
  
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,18 +17,21 @@ export const metadata: Metadata = {
   description: "All in one wallet",
 };
  
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}){
+
+  const session =  await getServerSession(authOptions);
+ 
   return (
     <html lang="en">
  
         <body className={inter.className}>
         <Providers>
           <div className="min-w-screen flex flex-col min-h-screen bg-[#ebe6e6]">
-            <AppbarClient />
+            {session && <AppbarClient />}
             {children}
            
           </div>

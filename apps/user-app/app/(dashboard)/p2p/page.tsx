@@ -10,7 +10,7 @@ import { getBalance } from "../../lib/actions/getBalance";
 import { PageTitle } from "../../../components/PageTitle";
  
 export default async function(){
-const transactions:any = await getTrasactions()
+const transactions:any = await getTrasactions(4)
  const balance:any  = await getBalance();
     return   <div className="w-full ">
         <PageTitle title="P2P Transfer" />

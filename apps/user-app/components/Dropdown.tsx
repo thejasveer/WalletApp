@@ -15,7 +15,7 @@ const [sd,setSd] = useState(false)
             </svg>
 
          </div>
-        {sd &&    <div    className=" w-27  absolute top-9 cursor-pointer    text-sm   rounded-b-md   bg-white shadow-b-md border w-full">
+        {sd &&    <div onClick={handleD}   className=" w-27  absolute top-9 cursor-pointer    text-sm   rounded-b-md   bg-white shadow-b-md border w-full">
             {children}
 
          </div>

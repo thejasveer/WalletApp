@@ -6,7 +6,7 @@ import { Center } from "@repo/ui/center";
 
 export default async function() {
 
-    const transactions :any= await getTrasactions();
+    const transactions :any= await getTrasactions(-1);
 
 
     return <div className=" w-full ">

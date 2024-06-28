@@ -70,6 +70,7 @@ model p2pTransfer {
   id         Int      @id @default(autoincrement())
   amount     Int
   balance    Int?
+  toBalance  Int?
   timestamp  DateTime
   fromUserId Int
   fromUser   User     @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])

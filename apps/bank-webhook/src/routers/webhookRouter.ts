@@ -66,9 +66,12 @@ webhookRouter.post('/bankWebhook',async (req,res)=>{
                         await    db.balance.update({
                         where:{userId: txn.userId},
                         data:{
-                           amount:{ decrement:txn.amount}
+                           amount:{ decrement:txn.amount},
+                           locked:{ decrement:txn.amount},
                         }
                     }),
+
+
                     await  db.rampTransaction.update({
                         where: {
                             token: payload.token

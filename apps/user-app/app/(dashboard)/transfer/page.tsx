@@ -30,7 +30,7 @@ export default async function() {
         <div className="flex flex-col  ">
 
             <div className="flex flex-col-reverse sm:flex-row gap-5 ">
-                <AddMoney   />
+                    <AddMoney   />
                  <BalanceCard  amount={balance.amount} locked={balance.locked} /> 
                
             </div>

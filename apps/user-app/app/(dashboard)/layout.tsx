@@ -8,10 +8,10 @@ export default function Layout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <div className="relative      rounded-lg shadow-md  ">
+    <div className="relative      rounded-lg ">
       
     <div className="  flex">
-        <div className=" fixed bottom-0 bg-white sm:bg-transparent left-0 right-0   sm:static sm:w-72 border-r border-slate-300 h-20 sm:min-h-screen sm:mr-4  sm:pt-28">
+        <div className="z-20 fixed bottom-0 bg-white sm:bg-transparent left-0 right-0   sm:static sm:w-72 border-r border-slate-300 h-20 sm:min-h-screen sm:mr-4  sm:pt-28">
             <div className="flex justify-evenly sm:flex-col  p-5">
                 <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
                 <SidebarItem href={"/transfer"} icon={<TransferIcon />} title="Transfer" />

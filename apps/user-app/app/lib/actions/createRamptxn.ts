@@ -33,6 +33,18 @@ export async function createRampTransaction(type: RampType, amount: number) {
             .setIssuedAt()
             .setExpirationTime("100m")
             .sign(secret);
+
+            if(type==RampType.OFF_RAMP){
+                await prisma.balance.update({
+                    where:{userId:Number(session.user?.id)},
+                    data:{
+                        locked:{
+                            increment:Number(amount * 100)
+                        }
+                    }
+                })
+            }
+            
     
         await prisma.rampTransaction.create({
             data: {

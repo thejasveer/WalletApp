@@ -6,9 +6,11 @@ import { getTrasactions } from "../../../lib/actions/getTransactions";
 export const GET = async (req:any) => {
    
     const { searchParams } = new URL(req.url);
-    const count = searchParams.get('count');
+    let count = searchParams.get('count');
     let transactions;
-    if(count){
+ 
+    const fCount:number = Number(count)
+    if(!isNaN(fCount)){
         transactions = await getTrasactions(Number(count));
     }else{
         transactions = await getTrasactions();

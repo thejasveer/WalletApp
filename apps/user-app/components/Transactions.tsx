@@ -8,6 +8,8 @@ import { Center } from "@repo/ui/center"
 import { Pill } from "./Pill"
 import { Filter } from "./Filter"
 import { usePathname, useRouter } from "next/navigation"
+import { Refresh } from "./Refersh"
+import { Loader } from "./Loader"
  
 
 export const Transactions =({
@@ -23,12 +25,11 @@ export const Transactions =({
     const [transactionsToDisplay,setTransacitionsToDisplay] = useState({transactions:transactions,type})
     const router= useRouter()
     const pathname = usePathname()
-    const {currTransactions} = useTransactions(count)
+    const {currTransactions,resetTransactions} = useTransactions(count)
 
 
     useEffect(()=>{
-        console.log(pathname)
-        console.log(typeSelected)
+       
        
         if(currTransactions.state=='hasValue'){
         
@@ -55,18 +56,33 @@ export const Transactions =({
             </div>
      
     }
+    const user = useRecoilValue(userAtom)
 
+    return   <div className="pt-2   flex-1  relative  ">
+          {!user&&<Loader/>}
+            <div className="absolute -top-10 right-2">
+                <div className="flex items-start ">
+             
+           { pathname=='/transactions'&&  <div className="flex px-2 mb-5">
+                <Filter label={"Types"} items={
+                  [{name:"Transfer",action:()=>setTypeSelected('transfer')},
+                      {name:"P2P transfer",action:()=>setTypeSelected('p2p')}
+                      ]} 
+                  action={()=>{}}/>
+              </div>  }
+              <div className="flex items-center h-10">
+              <Refresh action={resetTransactions} loading={currTransactions.state=='loading'}/>
+           
+              </div>
+             
+     
+              </div>
 
-    return   <div className="pt-2   flex-1   ">
-             { pathname=='/transactions'&&  <div className="flex px-2 mb-5">
-                  <Filter label={"Types"} items={
-                    [{name:"Transfer",action:()=>setTypeSelected('transfer')},
-                        {name:"P2P transfer",action:()=>setTypeSelected('p2p')}
-                        ]} 
-                    action={()=>{}}/>
-                </div>  }
-
+                </div>
+        
             <div>
+
+                <br/>
             { transactionsToDisplay?.transactions.map((t:any,i:number) => <div key={i}>
               
               <Transaction 
@@ -85,7 +101,7 @@ export const Transactions =({
              )}
             </div>
            
-           {count>0 &&  <div className=""> <Button onClick={()=>router.push('/transactions')}> View all transactions</Button></div>} 
+           {count>0 &&  <div className="flex justify-center"> <Button onClick={()=>router.push('/transactions')}> View all transactions</Button></div>} 
         </div>
    
 }
@@ -96,7 +112,7 @@ function Transaction({heading,date,amount,balance,type,status}:{status:string;ty
         
         switch(status){
             case "SUCCESS":
-                setPillClass(" text-green-400")
+                setPillClass(" text-green-500")
                 break;
                 case "INITIATED":
                  setPillClass("  text-yellow-400")
@@ -127,7 +143,7 @@ function Transaction({heading,date,amount,balance,type,status}:{status:string;ty
          </div>
         <div className="flex flex-col text-right">
              <div className="text-slate-600 text-sm font-semibold">{type!='ON_RAMP'?'-':''}{amount} CAD</div>
-        <div className="text-slate-400 text-xs">{balance} CAD</div>
+        <div className="text-slate-400 text-xs">CAD {balance}</div>
         </div>
 
 

@@ -7,6 +7,8 @@ import { useState } from "react";
 import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
  
 import { useMessage } from "../hooks/useMessage";
+import { useBalance } from "../hooks/useBalance";
+import { useTransactions } from "../hooks/useTransactions";
  
 
 
@@ -16,7 +18,8 @@ export function P2p() {
     const [amount, setAmount] = useState(0);
     const [loading,setLoading] = useState(false)
     const {bark} = useMessage()
- 
+    const {resetBalance} = useBalance()
+    const {resetTransactions} = useTransactions()
     function validate(){
         if(number==""){
             bark({message:"Please enter a valid peer number",success:false})
@@ -37,14 +40,16 @@ export function P2p() {
         }
         setLoading(true)
         const r =     await p2pTransfer(number, Number(amount) * 100);
-        debugger
+       
         bark(r)
+        resetBalance()
+        resetTransactions()
          setLoading(false)
      
     }
 
     return <div className="h-max w-full ">
-            <Card title="Send">
+            <Card title="">
                 <div className="w-full">
                     <TextInput  placeholder={"Number"} label="Number" onChange={(value) => {
                         setNumber(value)
