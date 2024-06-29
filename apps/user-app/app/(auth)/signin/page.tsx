@@ -8,14 +8,13 @@ import Errors from "../../../components/Errors";
 import { signIn } from "next-auth/react";
 import { useMessage } from "../../../hooks/useMessage";
 import { useRouter } from "next/navigation";
+import { Card } from "@repo/ui/card";
 export default function() {
 
     const [input,setInput] = useState({
-        name:"",
-        email:"",
+        username:"",
         password:"",
-        cpassword:"",
-        number:""
+      
     });
     const [loading,setLoading]= useState(false)
     const {bark} = useMessage();
@@ -24,31 +23,26 @@ export default function() {
     const router = useRouter()
         const handleSubmit = async ()=>{
             setLoading(true)
-            const res:  any = await axios.post('/api/auth/signup',input);
-            console.log(res.data)
-         
-            if(!res.data.success){
-                setErrors(res.data.error)
-                setLoading(false)
-            }else{
-                const response = await signIn("credentials", {
-                    username: input.number,
+           
+                const response:any = await signIn("credentials", {
+                    username: input.username,
                     password: input.password,
                     redirect: false,
                     callbackUrl: "/transfer",
                   });
-            
-                  if (!response?.error) {
+ 
+                  if (response?.ok) {
                     bark({message:"Successfully Logged In",success:true});
                     router.push("/transfer");
                     router.refresh();
                     setLoading(false)
                   } else {
-                    bark({message: "Unable to login. Please check your registered email and pasword",success:false});
+                    bark({message: "Unable to login. Please enter valid credentials",success:false});
+                     
                     setLoading(false)
                  
                   }
-            }
+          
 
           }
 
@@ -56,23 +50,16 @@ export default function() {
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <div className="text-2xl "> <Logo/></div>
     
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl  ">
-                  Create an account
-              </h1>
+      <Card title={"Signin"}>
+     
+           
               <div className="space-y-4 md:space-y-6"  >
                 <div>
-                <AuthInput keyStr={"name"} onChange={setInput} 
-                label={"Name"}      placeholder={"Enter your name"}/>
+                <AuthInput keyStr={"username"} onChange={setInput} 
+                label={"Email/Phone Number"}      placeholder={"Enter your email/phone number "}/>
                 </div>
-                  <div>
-                      <AuthInput keyStr={"number"}  onChange={setInput} label={"Phone Number"} placeholder={"Enter your phone number"}/>
-                   
-                  </div>
-                  <div>
-                  <AuthInput keyStr={"email"}type={"email"} onChange={setInput}  label={"Email"} placeholder={"Enter your Email"}/>
-                  </div>
+                 
+                  
                   <div>
                   <AuthInput keyStr={"password"}type={"password"} onChange={setInput}  label={"Password"} placeholder={"**********"}/>
                   </div>
@@ -86,15 +73,16 @@ export default function() {
                       </div>
            
                   </div>
-                <Button loading={loading} onClick={handleSubmit}>Signup</Button>
+                <Button loading={loading} onClick={handleSubmit}>Signin</Button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                      Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Signup here</a>
                   </p>
               </div>
               <Errors errors={errors}/>
-          </div>
+        
+          </Card>
        
-      </div>
+     
   </div>
 </section>
      

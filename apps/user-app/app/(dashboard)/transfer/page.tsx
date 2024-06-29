@@ -18,7 +18,7 @@ export default async function() {
        
         if(!session)
             {
-             redirect('/api/auth/signin')
+             redirect('/signin')
             }  
     const balance :any = await getBalance();
     const transactions:any = await getTrasactions(4);

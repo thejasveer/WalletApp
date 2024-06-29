@@ -1,30 +1,39 @@
 import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
-import axios from 'axios'
-import { addAbortListener } from "events";
+import { signinSchema } from "../../../../packages/schemas/src/schemas/auth";
+ 
+ 
 export const authOptions = {
     providers: [
       CredentialsProvider({
           name: 'Credentials',
           credentials: {
-            phone: { label: "Phone number", type: "text", placeholder: "1231231231", required: true },
+            username: { label: "Number/Email", type: "text", placeholder: "Enter registered number or email...", required: true },
             password: { label: "Password", type: "password", required: true }
           },
           // TODO: User credentials type from next-aut
           async authorize(credentials: any) {
             // Do zod validation, OTP validation here
-            const hashedPassword = await bcrypt.hash(credentials.password, 10);
-            
+            const {error} = signinSchema.safeParse(credentials)
+           if(error){
+            return null;
+           }
+            console.log(credentials)
             const existingUser = await db.user.findFirst({
                 where: {
-                    number: credentials.phone
+                    OR:[{
+                        number: credentials.username
+                    },{
+                        email: credentials.username
+                    }]
                 }
             });
-              
+            console.log(existingUser)
             if (existingUser) {
       
                 const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
+                console.log(passwordValidation)
                 if (passwordValidation) {
                     return {
                         id: existingUser.id.toString(),
@@ -36,48 +45,6 @@ export const authOptions = {
                 }
                 return null;
             }
-
-            try {
-                let user =  await db.user.create({
-                    data: {
-                        number: credentials.phone,
-                        password: hashedPassword,
-                        Balance: {
-                            create: {
-                                amount: 0,
-                                locked: 0
-                            }
-                          },
-                    }
-                });
-                
-       
-
-                const netbankingSignupCred= {
-                    username:user.number,password:credentials.password
-                } 
-
-                const res:any = await axios.post(process.env.NEXT_SIGNUP_NETBANKING_URL||'',netbankingSignupCred);
-                console.log(res.data.token)
-                 user =    await db.user.update({
-                    where:{ id:user.id},
-                        data: {
-                        netbankingLoginToken:res.data.token
-                    }
-                });
-            
-                return {
-                    id: user.id.toString(),
-                    name: user.name,
-                    number: user.number,
-                    email:user.email,
-                    netbankingLoginToken: user.netbankingLoginToken
-                  }
-            } catch(e) {
-
-                console.error(e);
-            }
-
             return null
           },
         })

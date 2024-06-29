@@ -46,7 +46,7 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
             }else{
              
                 setCurrentUser(null)
-                router.push('/signup')
+                // router.push('/signup')
             }
             }, [session]);
       

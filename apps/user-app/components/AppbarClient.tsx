@@ -14,7 +14,7 @@ export default function Page(): JSX.Element {
    <div>
       <Appbar onSignin={signIn} onSignout={async () => {
         await signOut()
-        router.push("/api/auth/signin")
+        router.push("/signin")
       }} user={session.data?.user} />
    </div>
   );

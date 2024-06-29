@@ -10,7 +10,10 @@
     "./center":"./src/Center.tsx",
     "./select":"./src/Select.tsx",
     "./textinput":"./src/TextInput.tsx",
-    "./Logo":"./src/Logo.tsx"
+    "./Logo":"./src/Logo.tsx",
+    "./AuthInput":"./src/AuthInput.tsx"
+    
+
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
