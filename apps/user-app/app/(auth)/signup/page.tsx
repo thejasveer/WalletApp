@@ -63,18 +63,18 @@ export default function() {
               </h1>
               <div className="space-y-4 md:space-y-6"  >
                 <div>
-                <AuthInput keyStr={"name"} onChange={setInput} 
+                <AuthInput keyStr={"name"} val={input.name} onChange={setInput} 
                 label={"Name"}      placeholder={"Enter your name"}/>
                 </div>
                   <div>
-                      <AuthInput keyStr={"number"}  onChange={setInput} label={"Phone Number"} placeholder={"Enter your phone number"}/>
+                      <AuthInput keyStr={"number"} val={input.number}  onChange={setInput} label={"Phone Number"} placeholder={"Enter your phone number"}/>
                    
                   </div>
                   <div>
-                  <AuthInput keyStr={"email"}type={"email"} onChange={setInput}  label={"Email"} placeholder={"Enter your Email"}/>
+                  <AuthInput val={input.email} keyStr={"email"}type={"email"} onChange={setInput}  label={"Email"} placeholder={"Enter your Email"}/>
                   </div>
                   <div>
-                  <AuthInput keyStr={"password"}type={"password"} onChange={setInput}  label={"Password"} placeholder={"**********"}/>
+                  <AuthInput val={input.password} keyStr={"password"}type={"password"} onChange={setInput}  label={"Password"} placeholder={"**********"}/>
                   </div>
                   {/* <div>
                   <AuthInput keyStr={"cpassword"}type={"password"} onChange={ setInput} label={"Confirm Password"} placeholder={"**********"}/>
