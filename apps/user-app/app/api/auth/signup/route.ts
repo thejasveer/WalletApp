@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@repo/db/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { signIn } from "next-auth/react";
 import axios from "axios";
 import {signupSchema} from "@repo/schemas/schemas"

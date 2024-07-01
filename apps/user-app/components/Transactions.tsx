@@ -6,7 +6,7 @@ import { useTransactions } from "../hooks/useTransactions"
 import { Button } from "@repo/ui/button"
 import { Center } from "@repo/ui/center"
 import { Pill } from "./Pill"
-import { Filter } from "./Filter"
+import { Filter } from "../../../packages/ui/src/Filter"
 import { usePathname, useRouter } from "next/navigation"
 import { Refresh } from "./Refersh"
 import { Loader } from "./Loader"
@@ -58,51 +58,52 @@ export const Transactions =({
     }
     const user = useRecoilValue(userAtom)
 
-    return   <div className="pt-2    relative ">
-          {!user&&<Loader/>}
-            <div className="absolute -top-10 right-2">
-                <div className="flex items-start ">
-             
-           { pathname=='/transactions'&&  <div className="flex px-2 mb-5">
-                <Filter label={"Types"} items={
-                  [{name:"Transfer",action:()=>setTypeSelected('transfer')},
-                      {name:"P2P transfer",action:()=>setTypeSelected('p2p')}
-                      ]} 
-                  action={()=>{}}/>
-              </div>  }
-              <div className="flex items-center h-10">
-              <Refresh action={resetTransactions} loading={currTransactions.state=='loading'}/>
-           
-              </div>
-             
-     
-              </div>
-
-                </div>
-        
-            <div>
-
-                <br/>
-            { transactionsToDisplay?.transactions.map((t:any,i:number) => <div key={i}>
-              
-              <Transaction 
-              
-              heading={t.heading}
-              date= {t.date}
-              amount={t.amount / 100}
-              balance={t.balance}
-              type={t.type}
-              status={t.status}
-              ></Transaction> 
-              
+    return  <div className="pt-2   relative  ">
+                {!user&&<Loader/>}
+                    <div className="absolute -top-10 right-2">
+                        <div className="flex items-start ">
+                    
+                { pathname=='/transactions'&&  <div className="flex px-2 mb-5">
+                        <Filter label={"Types"} items={
+                        [{name:"Transfer",action:()=>setTypeSelected('transfer')},
+                            {name:"P2P transfer",action:()=>setTypeSelected('p2p')}
+                            ]} 
+                        action={()=>{}}/>
+                    </div>  }
+                    <div className="flex items-center h-10">
+                    <Refresh action={resetTransactions} loading={currTransactions.state=='loading'}/>
                 
-            </div>
+                    </div>
+                    
             
-             )}
-            </div>
-           
-           {count>0 &&  <div className="flex justify-center"> <Button onClick={()=>router.push('/transactions')}> View all transactions</Button></div>} 
-        </div>
+                    </div>
+
+                    </div>
+                            
+                    <div className="py-0 max-h-[40rem] overflow-scroll">
+                    <br/>
+                    { transactionsToDisplay?.transactions.map((t:any,i:number) => <div key={i}>
+                    
+                    <Transaction 
+                    
+                    heading={t.heading}
+                    date= {t.date}
+                    amount={t.amount / 100}
+                    balance={t.balance}
+                    type={t.type}
+                    status={t.status}
+                    ></Transaction> 
+                    
+                        
+                    </div>
+                    
+                    )}
+                    </div>
+                
+                {count>0 &&  <div className="flex justify-center"> <Button onClick={()=>router.push('/transactions')}> View all transactions</Button></div>} 
+           </div>
+ 
+   
    
 }
 

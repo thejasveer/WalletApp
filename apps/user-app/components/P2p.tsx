@@ -58,7 +58,7 @@ export function P2p() {
                         setAmount(value)
                     }} />
                     <div className="pt-4 flex justify-center">
-                        <Button loading={loading} onClick={validate}>Send</Button>
+                        <Button full={true} loading={loading} onClick={validate}>Send</Button>
                     </div>
                 </div>
             </Card>

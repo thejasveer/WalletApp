@@ -5,7 +5,7 @@ import { authOptions } from '../auth';
 import { signIn } from 'next-auth/react';
 
 export  const  getTrasactions = async (count:number = -1) => {
-  console.log("countfrom ",count)
+ 
  try{
     const session = await getServerSession(authOptions);
     

@@ -11,9 +11,10 @@
     "./select":"./src/Select.tsx",
     "./textinput":"./src/TextInput.tsx",
     "./Logo":"./src/Logo.tsx",
-    "./AuthInput":"./src/AuthInput.tsx"
+    "./AuthInput":"./src/AuthInput.tsx",
+    "./Avatar":"./src/Avatar.tsx",
+    "./Filter":"./src/Filter.tsx"
     
-
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

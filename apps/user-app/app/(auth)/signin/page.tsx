@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { Card } from "@repo/ui/card";
 export default function() {
 
+ 
+
     const [input,setInput] = useState({
         username:"",
         password:"",
@@ -32,10 +34,11 @@ export default function() {
                   });
  
                   if (response?.ok) {
-                    bark({message:"Successfully Logged In",success:true});
+                   
                     router.push("/transfer");
                     router.refresh();
                     setLoading(false)
+                    bark({message:"Successfully Logged In",success:true});
                   } else {
                     bark({message: "Unable to login. Please enter valid credentials",success:false});
                      
@@ -46,7 +49,9 @@ export default function() {
 
           }
 
-    return  <section className="   h-screen">
+    return  <section className="   h-screen w-screen">
+ 
+
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <div className="text-2xl "> <Logo/></div>
     
@@ -55,27 +60,25 @@ export default function() {
            
               <div className="space-y-4 md:space-y-6"  >
                 <div>
-                <AuthInput keyStr={"username"} onChange={setInput} 
+                <AuthInput keyStr={"username"} val={input.username} onChange={setInput} 
                 label={"Email/Phone Number"}      placeholder={"Enter your email/phone number "}/>
                 </div>
                  
                   
                   <div>
-                  <AuthInput keyStr={"password"}type={"password"} onChange={setInput}  label={"Password"} placeholder={"**********"}/>
+                  <AuthInput val={input.password} keyStr={"password"}type={"password"} onChange={setInput}  label={"Password"} placeholder={"**********"}/>
                   </div>
                   {/* <div>
                   <AuthInput keyStr={"cpassword"}type={"password"} onChange={ setInput} label={"Confirm Password"} placeholder={"**********"}/>
                   </div> */}
                  
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                       
-                      </div>
+                  <div className="flex justify-center w-full">
+                  <Button full={true} loading={loading} onClick={handleSubmit}>Signin</Button>
            
                   </div>
-                <Button loading={loading} onClick={handleSubmit}>Signin</Button>
+             
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Signup here</a>
+                      Don't have an account? <a href="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Signup here</a>
                   </p>
               </div>
               <Errors errors={errors}/>

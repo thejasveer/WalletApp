@@ -53,7 +53,7 @@ export const Dasboard=({user}:any)=>{
       },[input])
     const [errors,setErrors] = useState([])
     
-    return user &&<div>
+    return user && <div>
            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <PageTitle title={"Hi, "+ user?.name}/ >
               <Card title={"Account Info"}>
@@ -74,14 +74,14 @@ export const Dasboard=({user}:any)=>{
                   </div>
                  
                  
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                       
+                   
+                      <div className="flex w-full justify-center">
+                         <Button loading={loading} onClick={handleSubmit}>Save</Button>
+               
                       </div>
            
-                  </div>
-                <Button loading={loading} onClick={handleSubmit}>Save</Button>
-                 
+              
+                
               </div>
 
               <Errors errors={errors}/>

@@ -6,10 +6,10 @@ import { Card } from "@repo/ui/card";
  
 import { useEffect, useState } from "react";
 import { useBalance } from "../hooks/useBalance";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue } from "@repo/store";
 import { userAtom } from "@repo/store";
 import { Loader } from "./Loader";
-import { Refresh } from "./Refersh";
+ 
 import { Logo } from "@repo/ui/Logo";
  
 interface Balance{

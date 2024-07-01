@@ -84,7 +84,7 @@ export const AddMoney = () => {
                 }} />
             
                 <div className="flex justify-center pt-4">
-                    <Button onClick={validate}>
+                    <Button full={true} onClick={validate}>
                    {type=='ON_RAMP'?'Add':'Withdraw'} Money
                     </Button>
                 </div>

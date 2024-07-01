@@ -52,7 +52,7 @@ export default function() {
 
           }
 
-    return  <section className="   h-screen">
+    return  <section className="    ">
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <div className="text-2xl "> <Logo/></div>
     
@@ -76,19 +76,14 @@ export default function() {
                   <div>
                   <AuthInput val={input.password} keyStr={"password"}type={"password"} onChange={setInput}  label={"Password"} placeholder={"**********"}/>
                   </div>
-                  {/* <div>
-                  <AuthInput keyStr={"cpassword"}type={"password"} onChange={ setInput} label={"Confirm Password"} placeholder={"**********"}/>
-                  </div> */}
+              
                  
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                       
-                      </div>
-           
-                  </div>
-                <Button loading={loading} onClick={handleSubmit}>Signup</Button>
-                  <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                 <div className="flex justify-center w-full">
+                 <Button full={true}loading={loading} onClick={handleSubmit}>Signup</Button>
+             
+                 </div>
+                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                      Already have an account? <a href="/signin" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                   </p>
               </div>
               <Errors errors={errors}/>

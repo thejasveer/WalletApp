@@ -1,4 +1,4 @@
-"use client"
+ 
 
 import { getServerSession } from "next-auth";
 import { redirect } from 'next/navigation'
@@ -9,6 +9,7 @@ export default async function Page() {
   if (session?.user) {
     redirect('/tranfer')
   } else {
-    redirect('/signin')
+    redirect('/')
   }
+ 
 }

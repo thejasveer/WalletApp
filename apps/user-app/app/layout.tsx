@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "../provider";
 import AppbarClient from "../components/AppbarClient";
 import { Loader } from "../components/Loader";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getServerSession } from "next-auth";
 import { authOptions } from "./lib/auth";
@@ -31,13 +31,15 @@ export default async function RootLayout({
         <body className={inter.className}>
         <Providers>
           <div className="min-w-screen flex flex-col min-h-screen bg-[#ebe6e6]">
+           
             {session && <AppbarClient />}
             {children}
-           
-          </div>
+         
+ 
+  </div>
           <ToastContainer />
           </Providers>
-        </body>
+           </body>
      
     </html>
   );

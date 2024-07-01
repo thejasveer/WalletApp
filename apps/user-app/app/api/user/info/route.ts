@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../lib/auth";
 import { infoScehma } from "@repo/schemas/schemas";
 import prisma from "@repo/db/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
     
 
