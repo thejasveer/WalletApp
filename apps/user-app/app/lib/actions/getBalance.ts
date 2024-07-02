@@ -8,7 +8,7 @@ export  const  getBalance = async () => {
  try{
     const session = await getServerSession(authOptions);
    
-    if (!session?.user || !session.user?.id) {
+    if (!session) {
        signIn()
     }
  
@@ -24,8 +24,7 @@ export  const  getBalance = async () => {
 
     return  balance
  }catch(error){
-
-    console.log(error)
+ 
     return error;
  }
 }

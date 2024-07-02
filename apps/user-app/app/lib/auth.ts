@@ -19,7 +19,7 @@ export const authOptions = {
            if(error){
             return null;
            }
-            console.log(credentials)
+             
             const existingUser = await db.user.findFirst({
                 where: {
                     OR:[{
@@ -29,11 +29,11 @@ export const authOptions = {
                     }]
                 }
             });
-            console.log(existingUser)
+           
             if (existingUser) {
       
                 const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
-                console.log(passwordValidation)
+              
                 if (passwordValidation) {
                     return {
                         id: existingUser.id.toString(),

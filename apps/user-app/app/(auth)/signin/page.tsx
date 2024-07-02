@@ -3,7 +3,6 @@ import { Logo } from "@repo/ui/Logo";
 import { Button } from "@repo/ui/button";
 import { AuthInput } from "@repo/ui/AuthInput";
 import { useEffect, useState } from "react";
-import axios from "axios"
 import Errors from "../../../components/Errors";
 import { signIn } from "next-auth/react";
 import { useMessage } from "../../../hooks/useMessage";

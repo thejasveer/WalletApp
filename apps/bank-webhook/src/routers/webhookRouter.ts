@@ -143,8 +143,7 @@ webhookRouter.post('/bankWebhook',async (req,res)=>{
  
 webhookRouter.post('/sendNotification',async(req,res)=>{
     const data= req.body;
-    console.log(data)
-  
+   
     sendMessage(data.userId,{message:data.message,"success":true})
     res.status(200).json({
         message: "Captured"

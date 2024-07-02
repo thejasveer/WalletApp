@@ -9,7 +9,7 @@ export  const  getTrasactions = async (count:number = -1) => {
  try{
     const session = await getServerSession(authOptions);
     
-    if (!session?.user || !session.user?.id) {
+    if (!session) {
        signIn()
     }
 
@@ -68,8 +68,7 @@ export  const  getTrasactions = async (count:number = -1) => {
           
         }))}
  }catch(error){
-
-    console.log(error)
+ 
     return error;
  }
 }
