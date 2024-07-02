@@ -1,25 +1,30 @@
-
-import { atom, atomFamily, selector, selectorFamily } from "recoil";
-import db from "@repo/db/client"
  
-export const balanceAtom = atomFamily ({
-    key:"myBlogAtom",
-    default: selectorFamily({
-      key:"balanceAtomSelector",
-      get: (id: number) => async ({get}) => {
-      console.log("aa",id)
-        // get(MyBlogsTrigger);
-        const balance = await db.balance.findFirst({
-            where: {
-                userId: id
-            }
-        });
-        return {
-            amount: balance?.amount || 0,
-            locked: balance?.locked || 0
-        }
-   
-    },
+import {  atom, selector   } from "recoil";
+
+import { userAtom } from "./user";
+ import axios from 'axios'
+
+ export const currBalanceAtom= atom({
+    key:"currBalanceAtom",
+    default:null
+ })
+
+export const balanceAtom = selector ({
+    key:"balanceAtom",
+    get:  async ({get}) => {
+ 
+         get(balanceTriggerAtom)
+        // if( user?.id){
+         
+            const balance: any =  await axios.get('/api/user/balance');
+            return  balance.data
+        // }
+        // return[];
+      },
    
     })
-  });
+ 
+export const balanceTriggerAtom = atom({
+key:"balanceTriggerAtom",
+default:0
+})

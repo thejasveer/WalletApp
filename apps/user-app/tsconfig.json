@@ -13,6 +13,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "../../packages/ui/src/Avatar.tsx", "../../packages/ui/src/Filter.tsx", "../../packages/ui/src/Dropdown.tsx", "../../packages/ui/src/DropdownItem.tsx"  ],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,17 @@
+import { getSession, useSession } from "next-auth/react";
+import { Dasboard } from "../../../components/Dashboard";
+import { authOptions } from "../../lib/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function() {
-    return <div>
-        Dashboard Page (or transfer/txn page)
-    </div>
-}
+ 
+
+export default async function () {
+    const session = await getServerSession(authOptions);
+    if(!session)
+        {
+         redirect('/signin')
+        } 
+     
+    return <Dasboard user={session?.user} />
+    }

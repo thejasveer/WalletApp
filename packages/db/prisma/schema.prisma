@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  email             String?             @unique
-  name              String?
-  number            String              @unique
-  password          String
-  OnRampTransaction OnRampTransaction[]
-  Balance           Balance?
-
-  sentTransfers     p2pTransfer[] @relation(name: "FromUserRelation")
-  receivedTransfers p2pTransfer[] @relation(name: "ToUserRelation")
+  id                   Int               @id @default(autoincrement())
+  email                String?           @unique
+  name                 String?
+  number               String            @unique
+  password             String
+  RampTransaction      RampTransaction[]
+  Balance              Balance?
+  netbankingLoginToken String?
+  sentTransfers        p2pTransfer[]     @relation(name: "FromUserRelation")
+  receivedTransfers    p2pTransfer[]     @relation(name: "ToUserRelation")
 }
 
 model Merchant {
@@ -27,22 +27,25 @@ model Merchant {
   auth_type AuthType
 }
 
-model OnRampTransaction {
-  id        Int          @id @default(autoincrement())
-  status    OnRampStatus
-  token     String       @unique
-  provider  String
+model RampTransaction {
+  id        Int        @id @default(autoincrement())
+  status    RampStatus
+  type      RampType
+  token     String     @unique
+  provider  String?
+  paymentId String?    @unique
   amount    Int
+  balance   Int?
   startTime DateTime
   userId    Int
-  user      User         @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
 }
 
 model Balance {
   id     Int  @id @default(autoincrement())
   userId Int  @unique
-  amount Int
-  locked Int
+  amount Int  @default(20000)
+  locked Int  @default(0)
   user   User @relation(fields: [userId], references: [id])
 }
 
@@ -51,15 +54,23 @@ enum AuthType {
   Github
 }
 
-enum OnRampStatus {
-  Success
-  Failure
-  Processing
+enum RampType {
+  ON_RAMP
+  OFF_RAMP
+}
+
+enum RampStatus {
+  INITIATED
+  PROCESSING
+  SUCCESS
+  FAILED
 }
 
 model p2pTransfer {
   id         Int      @id @default(autoincrement())
   amount     Int
+  balance    Int?
+  toBalance  Int?
   timestamp  DateTime
   fromUserId Int
   fromUser   User     @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])

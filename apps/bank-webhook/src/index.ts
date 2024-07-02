@@ -1,60 +1,27 @@
 import express from "express";
+import cors from 'cors'
+import { webhookRouter } from "./routers/webhookRouter";
+import dotenv from 'dotenv';
+import { startWebSocketServer } from "./websocketServer";
+ 
+dotenv.config({ path: __dirname + "/../.env" })
+ const PORT_EXPRESS_WEBHOOK =  process.env.PORT_EXPRESS_WEBHOOK||'3002'
+ 
 
-import { bankWebhookSchema } from "@repo/schemas/schemas";
-import db from "@repo/db/client";
 const app = express();
 
+app.use(cors())
+app.use(express.json())
+ 
 
-app.post('/bankWebhook',async (req,res)=>{
-    const params =req.body;
-    const {success} = bankWebhookSchema.safeParse(params)
-    try {
-        if(success){
-            const paymentInformation: {
-                token: string;
-                userId: number;
-                amount: number
-            } = {
-                token: params.token,
-                userId: params.user_identifier,
-                amount: params.amount
-            };
-            await db.$transaction([
-            db.balance.update({
-                where:{userId: paymentInformation.userId},
-                data:{
-                   amount:{ increment:paymentInformation.amount}
-                }
-            }),
-            db.onRampTransaction.update({
-                where: {
-                    token: paymentInformation.token
-                }, 
-                data: {
-                    status: "Success",
-                }
-            })
-        ]);
-            res.status(200).json({
-                message: "Captured"
-            })
-    
-        }else{
-            res.status(411).json({
-                message: "Invalid inputs"
-            })
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(411).json({
-            message: "Error while processing webhook"
-        })
-    }
-
-    
-
+app.use('/',webhookRouter);
+//http server for web socket
+ 
+const server = app.listen(PORT_EXPRESS_WEBHOOK,()=>{
+    console.log("Web server running on port "+ PORT_EXPRESS_WEBHOOK)
 })
-const port = 3002
-app.listen(port,()=>{
-    console.log("Web server running on port "+ port)
-})
+startWebSocketServer(server)
+
+
+
+ 

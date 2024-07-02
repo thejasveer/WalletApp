@@ -2,6 +2,7 @@
 
 # Dependencies
 node_modules
+node_modules1
 .pnp
 .pnp.js
 
@@ -36,3 +37,5 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+node_modules/
+.next/

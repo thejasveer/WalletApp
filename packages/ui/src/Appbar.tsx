@@ -1,3 +1,6 @@
+import { Avatar } from "./Avatar";
+import { Filter } from "./Filter";
+import { Logo } from "./Logo";
 import { Button } from "./button";
 
 interface AppbarProps {
@@ -14,12 +17,12 @@ export const Appbar = ({
     onSignin,
     onSignout
 }: AppbarProps) => {
-    return <div className="flex justify-between border-b px-4">
-        <div className="text-lg flex flex-col justify-center">
-            PayTM
-        </div>
-        <div className="flex flex-col justify-center pt-2">
+  
+    return <div className="flex justify-between text-[#6a51a6] border-b border-slate-300 px-5 sm:px-12 ">
+         <Logo/>
+        <div className="flex gap-2 justify-center pt-2">
             <Button onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</Button>
-        </div>
+       
+         </div>
     </div>
 }
