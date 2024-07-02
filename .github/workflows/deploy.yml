@@ -27,7 +27,7 @@ jobs:
           tags: codewithjass/wallet_app:latest # Replace with your Docker Hub username and repository
 
       - name: Verify Pushed Image
-        run: docker pull codewithjass/wallet_app:latest # Replace with your Docker Hub username and repository
+        run: docker pull codewithjass/wallet_app:latest # Replaces with your Docker Hub username and repository
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
