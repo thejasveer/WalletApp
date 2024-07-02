@@ -25,8 +25,7 @@ export default function() {
         const handleSubmit = async ()=>{
             setLoading(true)
             const res:  any = await axios.post('/api/auth/signup',input);
-            console.log(res.data)
-         
+            
             if(!res.data.success){
                 setErrors(res.data.error)
                 setLoading(false)

@@ -15,7 +15,7 @@ export async function createRampTransaction(type: RampType, amount: number) {
 
     const session = await getServerSession(authOptions);
     const balance:any = await getBalance()
-    if (!session?.user || !session.user?.id) {
+    if (!session) {
        signIn()
     }
     if(balance.anmount<amount&&type==RampType.OFF_RAMP){

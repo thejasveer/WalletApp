@@ -48,9 +48,7 @@ export const Dasboard=({user}:any)=>{
               bark({message: "Info updated successfully",success:true});
             }
     }   
-    useEffect(()=>{
-      console.log(input)
-      },[input])
+ 
     const [errors,setErrors] = useState([])
     
     return user && <div>

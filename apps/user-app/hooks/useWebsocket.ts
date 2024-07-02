@@ -14,13 +14,12 @@ export function useWebSocket(url:string|undefined,userId:number|null|undefined) 
  
     if(userId&& url)  
   {  
-  console.log(url,"Ss")
-   
+ 
    
     ws.current = new WebSocket(url);
 
     ws.current.onopen = () => {
-      console.log('WebSocket connection opened');
+ 
       // Send userId after connection is opened
      
       ws.current?.send(JSON.stringify({ userId: userId }));
@@ -32,12 +31,12 @@ export function useWebSocket(url:string|undefined,userId:number|null|undefined) 
       resetTransactions()
       bark(data);
 
-      console.log(data)
+     
  
     };
 
     ws.current.onclose = () => {
-      console.log('WebSocket connection closed');
+      
     };
 
     ws.current.onerror = (error) => {
@@ -53,9 +52,9 @@ export function useWebSocket(url:string|undefined,userId:number|null|undefined) 
   }, [userId]);
 
   const sendMessage = (message:any) => {
-    console.log(message)
+    
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-        console.log(message)
+     
       ws.current.send(JSON.stringify(message));
     }
   };
