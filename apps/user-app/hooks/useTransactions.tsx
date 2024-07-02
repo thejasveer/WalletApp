@@ -1,6 +1,6 @@
 import { transactionsAtom, transactionsTriggerAtom } from "@repo/store/src/atoms/transactions"
 import {  useRecoilValueLoadable, useSetRecoilState } from "@repo/store";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
  
 
 export const useTransactions =(count:number=-1)=>{
@@ -12,12 +12,12 @@ const transactionTrigger = useSetRecoilState(transactionsTriggerAtom)
 useEffect(()=>{
       isNaN(count)?setFCount(-1):setFCount(count)
 },[fCount])
-function resetTransactions(){
+const resetTransactions= useCallback(()=>{
     
         transactionTrigger(prev=>prev+1)
      
    
-}
+},[transactionTrigger])
 return {currTransactions,resetTransactions};
 
 }
