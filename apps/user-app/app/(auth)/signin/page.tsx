@@ -2,8 +2,8 @@
 import { Logo } from "@repo/ui/Logo";
 import { Button } from "@repo/ui/button";
 import { AuthInput } from "@repo/ui/AuthInput";
-import { useEffect, useState } from "react";
-import Errors from "../../../components/Errors";
+import {  useState } from "react";
+ 
 import { signIn } from "next-auth/react";
 import { useMessage } from "../../../hooks/useMessage";
 import { useRouter } from "next/navigation";
@@ -19,9 +19,15 @@ export default function() {
     });
     const [loading,setLoading]= useState(false)
     const {bark} = useMessage();
- 
-    const [errors,setErrors] = useState([])
+  
     const router = useRouter()
+
+    const handleDemoLogin=(user:number)=>{
+      const demoCred= {username:`user${user}@wallet.com`,password:"111111"}
+      setInput(demoCred)
+      handleSubmit()
+    }
+
         const handleSubmit = async ()=>{
             setLoading(true)
            
@@ -51,7 +57,7 @@ export default function() {
     return  <section className="   h-screen w-screen">
  
 
-  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
     <div className="text-2xl "> <Logo/></div>
     
       <Card title={"Signin"}>
@@ -79,9 +85,12 @@ export default function() {
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don't have an account? <a href="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Signup here</a>
                   </p>
+
+                  <Button full={true} loading={loading} onClick={()=>handleDemoLogin(1)}>Login as demo user 1</Button>
+                  <Button full={true} loading={loading} onClick={()=>handleDemoLogin(2)}>Login as demo user 2</Button>
+           
               </div>
-              <Errors errors={errors}/>
-        
+              
           </Card>
        
      

@@ -12,7 +12,7 @@ export default function Page(): JSX.Element {
   return (
 
    <div>
-      <Appbar onSignin={signIn} onSignout={async () => {
+      <Appbar onSignin={signIn} onLogoClick={()=> router.push("/transfer")} onSignout={async () => {
         await signOut()
         router.push("/signin")
       }} user={session.data?.user} />

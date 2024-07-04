@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRecoilValue, userAtom } from "@repo/store"
 import { useTransactions } from "../hooks/useTransactions"
 import { Button } from "@repo/ui/button"
-import { Center } from "@repo/ui/center"
+ 
 import { Pill } from "./Pill"
 import { Filter } from "../../../packages/ui/src/Filter"
 import { usePathname, useRouter } from "next/navigation"
@@ -113,16 +113,16 @@ function Transaction({heading,date,amount,balance,type,status}:{status:string;ty
         
         switch(status){
             case "SUCCESS":
-                setPillClass(" text-green-500")
+                setPillClass(" text-green-400")
                 break;
                 case "INITIATED":
-                 setPillClass("  text-yellow-400")
+                 setPillClass("text-yellow-400")
                  break;
                 case "FAILED":
-                setPillClass("  text-red-600")
+                setPillClass("text-red-400")
                 break;
                 case "PROCCESSING":
-                setPillClass(" text-orange-500")    
+                setPillClass(" text-orange-400")    
         }
     },[])
 

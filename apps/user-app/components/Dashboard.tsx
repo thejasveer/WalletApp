@@ -1,5 +1,5 @@
 "use client"
-import {  useSetRecoilState, userAtom } from "@repo/store";
+import {  useRecoilState, userAtom } from "@repo/store";
 import { useEffect, useState } from "react";
  
 import { useMessage } from "../hooks/useMessage";
@@ -10,27 +10,37 @@ import Errors from "./Errors";
 import axios from "axios";
 import { Card } from "@repo/ui/card";
  
+ 
 
-export const Dasboard=({user}:any)=>{
+export const Dasboard=()=>{
 
-    const setUser = useSetRecoilState(userAtom)
+    const [user,setUser] = useRecoilState(userAtom)
+ 
+    const [displayName,setDisplayName] = useState(user?.name)
 
-    const [input,setInput] = useState({
-        name:user.name,
-        email:user.email,
+    const [input,setInput] = useState<any>({
+        name:null,
+        email:null,
         password:null,
-        number:user.number
+        number:null
     });
     const [loading,setLoading]= useState(false)
 
     const {bark} = useMessage();
+
+    useEffect(()=>{
+      if(user){
+        setInput((prev:any)=>({...prev,name:user.name,number:user.number,email:user.email}))
+     
+        setDisplayName(user.name)
+      }
+    },[user])
     
   async  function handleSubmit(){
             setLoading(true)
             const res:any =await  axios.post('/api/user/info',{
                name: input.name,
-
-               number:input.number,
+              number: input.number,
                password:input.password
             })
             
@@ -38,27 +48,27 @@ export const Dasboard=({user}:any)=>{
             if(!res.data.success){
                 setErrors(res.data.error)
                 setLoading(false)
-                setInput(prev=>({...prev,password:null}))
+                setInput((prev:any)=>({...prev,password:null}))
 
             }else{
-           
+              setUser((prev:any)=>({...prev,name:input.name}))
               setErrors([])
               setLoading(false)
-              // setUser(prev=>({...prev,name:"Ss"}))
+              setDisplayName(input.name)
               bark({message: "Info updated successfully",success:true});
             }
     }   
  
     const [errors,setErrors] = useState([])
     
-    return user && <div>
-           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <PageTitle title={"Hi, "+ user?.name}/ >
+    return user &&   <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <PageTitle title={"Hello, "+ displayName}/ >
               <Card title={"Account Info"}>
+                 
               <div className="space-y-4 md:space-y-6"  >
                 <div>
                 <AuthInput val={input.name}  grid={true} keyStr={"name"} onChange={setInput} 
-                label={"Name"}      placeholder={"Enter your name"}/>
+                label={"Name"}  placeholder={"Enter your name"}/>
                 </div>
                   <div>
                       <AuthInput val={input.number}  disabled={true} grid={true} keyStr={"number"}  onChange={setInput} label={"Number"} placeholder={"Enter your phone number"}/>
@@ -85,6 +95,6 @@ export const Dasboard=({user}:any)=>{
               <Errors errors={errors}/>
               </Card> 
           </div>
-    </div>
+    
 
 }

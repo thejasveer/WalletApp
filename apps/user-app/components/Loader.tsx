@@ -1,7 +1,5 @@
 "use client"
-
-import { Center } from "@repo/ui/center"
-
+ 
 export function Loader(){
 
 

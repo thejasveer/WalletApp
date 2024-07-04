@@ -2,7 +2,7 @@ import { Card } from "@repo/ui/card";
 import { Transactions } from "../../../components/Transactions";
 import { getTrasactions } from "../../lib/actions/getTransactions"
 import { PageTitle } from "../../../components/PageTitle";
-import { Center } from "@repo/ui/center";
+ 
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../../lib/auth";

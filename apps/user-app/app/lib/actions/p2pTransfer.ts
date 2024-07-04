@@ -4,7 +4,7 @@ import { authOptions } from "../auth";
 import db from "@repo/db/client";
 
 import axios from "axios";
-import { resolve } from "path";
+ 
 export async function p2pTransfer(to: string, amount: number) {
 
     const session = await getServerSession(authOptions);
@@ -41,7 +41,7 @@ export async function p2pTransfer(to: string, amount: number) {
     if(toUser.id==from){
       return {
         success:false,
-        message: "You can't tranfer money to yourself."
+        message: "You can't transfer money to yourself."
     }
     }
     try {

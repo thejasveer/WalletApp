@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { P2p } from "../../../components/P2p";
-import prisma from "@repo/db/client";
+ 
 import { authOptions } from "../../lib/auth";
 import { Transactions } from "../../../components/Transactions";
 import { getTrasactions } from "../../lib/actions/getTransactions";

@@ -14,10 +14,13 @@ export const balanceAtom = selector ({
     get:  async ({get}) => {
  
          get(balanceTriggerAtom)
+        //  const user = get(userAtom)
         // if( user?.id){
          
             const balance: any =  await axios.get('/api/user/balance');
             return  balance.data
+        // }else{
+        //     return null
         // }
         // return[];
       },

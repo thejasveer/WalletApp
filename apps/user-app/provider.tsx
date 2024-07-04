@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { redirect, usePathname, useRouter } from "next/navigation";
 import { useWebSocket } from "./hooks/useWebsocket";
+import { useBalance } from "./hooks/useBalance";
  
 export const Providers = ({children}: {children: React.ReactNode}) => {
     return <RecoilRoot>
@@ -23,7 +24,7 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
         const currentLoggedInUser =  session?.user ;
         const setCurrentUser = useSetRecoilState(userAtom)
         useWebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL ,currentLoggedInUser?.id)
-            
+       const {resetBalance}= useBalance()
       
 
      
@@ -40,6 +41,7 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
                         id: currentLoggedInUser.id,
                         netbankingLoginToken: currentLoggedInUser.netbankingLoginToken
                     }));
+                    resetBalance()
 
                     
                 } 

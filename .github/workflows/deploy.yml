@@ -39,4 +39,4 @@ jobs:
             sudo docker pull codewithjass/wallet_app:latest
             sudo docker stop wallet_app || true
             sudo docker rm wallet_app || true
-            sudo docker run -d --name wallet_app -p 3001:3001 -p 3002:3002 codewithjass/wallet_app:latest
+            sudo docker run -d --env-file /home/ubuntu/walletApp/.env --name wallet_app -p 3001:3001 -p 3002:3002 codewithjass/wallet_app:latest

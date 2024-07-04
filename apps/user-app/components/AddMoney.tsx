@@ -20,12 +20,12 @@ export const AddMoney = () => {
     const user: any = session.data?.user;
     const {bark} = useMessage()
 
-    let [url,setUrl] = useState(process.env.NEXT_PUBLIC_NETBANKING_URL);
+    let [url,setUrl] = useState<string|undefined>();
      const [amount, setAmount] = useState(0);
     
     const [type,setType]= useState<"ON_RAMP" | "OFF_RAMP">("ON_RAMP")
     useEffect(()=>{
-       
+        setUrl(process.env.NEXT_PUBLIC_NETBANKING_URL)
 
     },[])
     const {resetTransactions} = useTransactions(4)
@@ -80,7 +80,7 @@ export const AddMoney = () => {
 
             <div className="w-full">
                 <TextInput label={"Amount"} placeholder={"Amount"} val={amount} onChange={(val) => {
-                    setAmount(Number(val))
+                   if(!isNaN(val)) setAmount(Number(val))
                 }} />
             
                 <div className="flex justify-center pt-4">

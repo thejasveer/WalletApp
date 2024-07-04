@@ -12,7 +12,12 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["NEXT_PUBLIC_NETBANKING_URL","NEXT_PUBLIC_SIGNUP_NETBANKING_URL",
+      "NEXT_PUBLIC_NETBANKING_SECRET",
+      "NEXT_PUBLIC_SERVER_WEBHOOK_URL",
+      "NEXT_PUBLIC_JWT_SECRET"
+    ]
     }
   }
 }

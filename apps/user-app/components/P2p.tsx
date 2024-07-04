@@ -52,10 +52,10 @@ export function P2p() {
             <Card title="">
                 <div className="w-full">
                     <TextInput  placeholder={"Number"} label="Number" onChange={(value) => {
-                        setNumber(value)
+                      if(!isNaN(value))   setNumber(value) 
                     }} />
                     <TextInput val={amount} placeholder={"Amount"} label="Amount" onChange={(value) => {
-                        setAmount(value)
+                      if(!isNaN(value))   setAmount(Number(value))
                     }} />
                     <div className="pt-4 flex justify-center">
                         <Button full={true} loading={loading} onClick={validate}>Send</Button>

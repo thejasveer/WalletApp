@@ -2,7 +2,7 @@
 import { Logo } from "@repo/ui/Logo";
 import { Button } from "@repo/ui/button";
 import { AuthInput } from "@repo/ui/AuthInput";
-import { useEffect, useState } from "react";
+import {   useState } from "react";
 import axios from "axios"
 import Errors from "../../../components/Errors";
 import { signIn } from "next-auth/react";
@@ -52,7 +52,7 @@ export default function() {
           }
  
     return  <section className="    ">
-  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  h-screen lg:py-0">
     <div className="text-2xl "> <Logo/></div>
     
       <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  ">

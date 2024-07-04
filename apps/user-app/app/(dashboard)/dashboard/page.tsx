@@ -1,4 +1,4 @@
-import { getSession, useSession } from "next-auth/react";
+ 
 import { Dasboard } from "../../../components/Dashboard";
 import { authOptions } from "../../lib/auth";
 import { getServerSession } from "next-auth";
@@ -13,5 +13,5 @@ export default async function () {
          redirect('/signin')
         } 
      
-    return <Dasboard user={session?.user} />
+    return <Dasboard/>
     }
