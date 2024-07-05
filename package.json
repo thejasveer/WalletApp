@@ -7,7 +7,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "cd packages/db && npx prisma generate && cd ../..",
-    "dev-web-1": "cd ./apps/user-app && npm run start",
+    "dev-web-1": "cd ./apps/user-app && npm run dev",
     "dev:service-1": "cd packages/db && npx prisma generate && cd ../..",
     "dev:service-2": "cd ./apps/bank-webhook && npm run start",
     "dev:all": "run-p  dev:service-1 dev:service-2 dev-web-1"
