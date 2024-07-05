@@ -12,8 +12,7 @@ export const Providers = ({children}: {children: React.ReactNode}) => {
         <SessionProvider>
              <SessionSyncProvider>
                 {children}
-               he {process.env.NEXT_PUBLIC_WEBSOCKET_URL }
-                </SessionSyncProvider>
+              </SessionSyncProvider>
          </SessionProvider>
     </RecoilRoot>
 }
@@ -24,7 +23,7 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
     
         const currentLoggedInUser =  session?.user ;
         const setCurrentUser = useSetRecoilState(userAtom)
-        useWebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL ,currentLoggedInUser?.id)
+        useWebSocket()
        const {resetBalance}= useBalance()
       
 
