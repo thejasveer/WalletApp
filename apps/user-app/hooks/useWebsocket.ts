@@ -11,14 +11,16 @@ export function useWebSocket(url:string|undefined,userId:number|null|undefined) 
     const {resetTransactions} = useTransactions()
 
   useEffect(() => {
+    console.log(url)
  
     if(userId&& url)  
   {  
- 
+    console.log("SS",url)
    
     ws.current = new WebSocket(url);
 
     ws.current.onopen = () => {
+      console.log("conn")
  
       // Send userId after connection is opened
      
@@ -26,6 +28,7 @@ export function useWebSocket(url:string|undefined,userId:number|null|undefined) 
     };
 
     ws.current.onmessage = (event) => {
+      console.log("mess")
       const data = JSON.parse(event.data);
       resetBalance()
       resetTransactions()
