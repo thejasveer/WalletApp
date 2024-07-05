@@ -12,6 +12,7 @@ export const Providers = ({children}: {children: React.ReactNode}) => {
         <SessionProvider>
              <SessionSyncProvider>
                 {children}
+               he {process.env.NEXT_PUBLIC_WEBSOCKET_URL }
                 </SessionSyncProvider>
          </SessionProvider>
     </RecoilRoot>
