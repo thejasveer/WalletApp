@@ -7,9 +7,9 @@ import   { WebSocketServer } from 'ws';
 
 export function startWebSocketServer(server: any){
     const wss = new WebSocketServer({ server: server });
-
+    console.log("websocket")
     wss.on('connection', function connection(ws) {
-         
+      console.log("websocket server started")   
       ws.on('error', console.error);
         ws.on('error', console.error);
         let userId: string | null = null;

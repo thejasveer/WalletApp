@@ -76,6 +76,7 @@ export async function p2pTransfer(to: string, amount: number) {
                 toBalance:toUser.Balance?.amount
             }
           })
+          console.log(process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification')
        
           await axios.post(process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification', {
             userId:Number(toUser.id),
@@ -91,7 +92,7 @@ export async function p2pTransfer(to: string, amount: number) {
     } catch (error:any) {
         return {
          success:false, 
-         message: error.message
+         message: error.message +process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification'
         }
     }
  
