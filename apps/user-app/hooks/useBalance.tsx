@@ -1,5 +1,5 @@
 "use client"
-import { balanceAtom, balanceTriggerAtom } from "@repo/store/src/atoms/balance"
+import { balanceAtom, balanceTriggerAtom } from "@repo/store"
 import {  useRecoilValueLoadable, useSetRecoilState } from "@repo/store";
  
 

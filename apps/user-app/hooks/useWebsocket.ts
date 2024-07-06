@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMessage } from './useMessage';
 import {  useBalance } from './useBalance';
 import { useTransactions } from './useTransactions';
-import { useRecoilValue } from 'recoil';
+import {useRecoilValue} from '@repo/store';
 import { userAtom } from '@repo/store';
 
 export function useWebSocket() {
@@ -15,10 +15,11 @@ export function useWebSocket() {
  
   useEffect(() => {
     if (user && user.id && process.env.NEXT_PUBLIC_WEBSOCKET_URL) {
-      console.log("Connecting to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-      if (ws.current == null) {
+     
+    if (ws.current == null) {
         ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-      }
+        console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
+    }
 
       ws.current.onopen = () => {
         console.log("WebSocket connection opened");
@@ -43,7 +44,7 @@ export function useWebSocket() {
     }
 
     return () => {
-      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      if (ws.current && ws.current.readyState === WebSocket.OPEN && !user) {
         ws.current.close();
       }
     };

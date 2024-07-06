@@ -56,7 +56,7 @@ export const Transactions =({
             </div>
      
     }
-    const user = useRecoilValue(userAtom)
+    const  user  = useRecoilValue(userAtom)
 
     return  <div className="pt-2   relative  ">
                 {!user&&<Loader/>}

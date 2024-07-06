@@ -20,6 +20,7 @@ export function startWebSocketServer(server: any){
             const data = JSON.parse(message.toString())
             
             if (data.userId) {
+              console.log("user"+data.userId +"connected")
                 userId = data.userId;
                 if (userId) {
                   clients[userId] = ws;
@@ -39,8 +40,6 @@ export function startWebSocketServer(server: any){
 
     })
  });
-
- 
 }
 export const sendMessage = (userId:number, message:{message:string;success:boolean}) => {
     const client = clients[userId];

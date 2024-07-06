@@ -2,7 +2,7 @@
 import { Logo } from "@repo/ui/Logo";
 import { Button } from "@repo/ui/button";
 import { AuthInput } from "@repo/ui/AuthInput";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
  
 import { signIn } from "next-auth/react";
 import { useMessage } from "../../../hooks/useMessage";
@@ -17,42 +17,53 @@ export default function() {
         password:"",
       
     });
-    const [loading,setLoading]= useState(false)
+    const [demoUser, setDemoUser] = useState<any>(null);
+    const [loading,setLoading]= useState<{state:boolean;index?:number}>({state:false,index:1});
+  
     const {bark} = useMessage();
   
     const router = useRouter()
 
     const handleDemoLogin=(user:number)=>{
-      const demoCred= {username:`user${user}@wallet.com`,password:"111111"}
-      setInput(demoCred)
-      handleSubmit()
+      setLoading({state:true,index:user})
+      setDemoUser(user);
+      setInput({username:`user${user}@wallet.com`,password:"111111"})
+      
     }
+    useEffect(()=>{
+      if (demoUser !== null) {
+        login();
+      }
+    },[input])
 
-        const handleSubmit = async ()=>{
-            setLoading(true)
-           
-                const response:any = await signIn("credentials", {
-                    username: input.username,
-                    password: input.password,
-                    redirect: false,
-                    callbackUrl: "/transfer",
-                  });
+   
+
+    const handleRegularLogin = async ()=>{
  
-                  if (response?.ok) {
-                   
-                    router.push("/transfer");
-                    router.refresh();
-                    setLoading(false)
-                    bark({message:"Successfully Logged In",success:true});
-                  } else {
-                    bark({message: "Unable to login. Please enter valid credentials",success:false});
-                     
-                    setLoading(false)
-                 
-                  }
-          
+      setLoading({state:true,index:0})
+      login()
+      }
 
-          }
+      const login = async ()=>{
+        const response:any = await signIn("credentials", {
+          username: input.username,
+          password: input.password,
+          redirect: false,
+          callbackUrl: "/transfer",
+        });
+  
+        if (response?.ok) {
+          router.push("/transfer");
+          router.refresh();
+          setLoading({state:false})
+          bark({message:"Successfully Logged In",success:true});
+        } else {
+          bark({message: "Unable to login. Please enter valid credentials",success:false});
+            
+          setLoading({state:false})
+        
+        }
+      }
 
     return  <section className="   h-screen w-screen">
  
@@ -78,17 +89,19 @@ export default function() {
                   </div> */}
                  
                   <div className="flex justify-center w-full">
-                  <Button full={true} loading={loading} onClick={handleSubmit}>Signin</Button>
+                  <Button full={true} loading={loading.state&&loading.index==0}  onClick={handleRegularLogin}>Signin</Button>
            
                   </div>
              
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don't have an account? <a href="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Signup here</a>
                   </p>
-
-                  <Button full={true} loading={loading} onClick={()=>handleDemoLogin(1)}>Login as demo user 1</Button>
-                  <Button full={true} loading={loading} onClick={()=>handleDemoLogin(2)}>Login as demo user 2</Button>
+                    <div className="flex flex-col items-center">
+                    <Button full={true} loading={loading.state&&loading.index==1} onClick={()=>handleDemoLogin(1)}>Login as demo user 1</Button>
+                    <Button full={true} loading={loading.state&&loading.index==2} onClick={()=>handleDemoLogin(2)}>Login as demo user 2</Button>
            
+                    </div>
+                
               </div>
               
           </Card>

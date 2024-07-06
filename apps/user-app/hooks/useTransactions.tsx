@@ -1,4 +1,4 @@
-import { transactionsAtom, transactionsTriggerAtom } from "@repo/store/src/atoms/transactions"
+import { transactionsAtom, transactionsTriggerAtom } from "@repo/store"
 import {  useRecoilValueLoadable, useSetRecoilState } from "@repo/store";
 import { useCallback, useEffect, useState } from "react";
  
@@ -14,7 +14,7 @@ useEffect(()=>{
 },[fCount])
 const resetTransactions= useCallback(()=>{
     
-        transactionTrigger(prev=>prev+1)
+        transactionTrigger((prev:number)=>prev+1)
      
    
 },[transactionTrigger])

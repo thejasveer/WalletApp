@@ -1,9 +1,8 @@
 "use client"
-import { RecoilRoot,  UserInterface,  userAtom } from "@repo/store";
-import { SessionProvider, signIn, useSession } from "next-auth/react";
+import { RecoilRoot,  useRecoilState,  userAtom } from "@repo/store";
+import { SessionProvider,  useSession } from "next-auth/react";
 import { ReactNode, useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { redirect, usePathname, useRouter } from "next/navigation";
+ 
 import { useWebSocket } from "./hooks/useWebsocket";
 import { useBalance } from "./hooks/useBalance";
  
@@ -18,39 +17,34 @@ export const Providers = ({children}: {children: React.ReactNode}) => {
 }
 
 const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
-    const { data: session } = useSession();
-    const router = useRouter()
+    const { data: session, update } = useSession();
+   
     
         const currentLoggedInUser =  session?.user ;
-        const setCurrentUser = useSetRecoilState(userAtom)
+        const [user,setCurrentUser] = useRecoilState(userAtom)
         useWebSocket()
        const {resetBalance}= useBalance()
-      
+         useEffect(() => {
+            if(currentLoggedInUser){
+                console.log(session)
+            if (currentLoggedInUser) {
+            
+                setCurrentUser((prev) => ({
+                    ...prev,
+                    name: currentLoggedInUser.name,
+                    email: currentLoggedInUser.email,
+                    number: currentLoggedInUser.number,
+                    id: currentLoggedInUser.id,
+                    netbankingLoginToken: currentLoggedInUser.netbankingLoginToken
+                }));
+                resetBalance()       
+            } 
+        }else{
+         setCurrentUser(null)
+          }
+        }, [session]);
 
-     
-            useEffect(() => {
-                if(session){
-                  
-                if (currentLoggedInUser) {
-             
-                    setCurrentUser((prev) => ({
-                        ...prev,
-                        name: currentLoggedInUser.name,
-                        email: currentLoggedInUser.email,
-                        number: currentLoggedInUser.number,
-                        id: currentLoggedInUser.id,
-                        netbankingLoginToken: currentLoggedInUser.netbankingLoginToken
-                    }));
-                    resetBalance()
-
-                    
-                } 
-            }else{
-             
-                setCurrentUser(null)
-                // router.push('/signup')
-            }
-            }, [session]);
+    
       
        
     
