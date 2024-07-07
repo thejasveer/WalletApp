@@ -4,6 +4,7 @@ console.log('Environment Variables:', process.env.NEXT_PUBLIC_WEBSOCKET_URL);
 
 module.exports = {
   transpilePackages: ["@repo/ui"],
+ 
   env:{
     NEXT_PUBLIC_JWT_SECRET:process.env.NEXT_PUBLIC_JWT_SECRET,
     NEXT_PUBLIC_NETBANKING_URL:process.env.NEXT_PUBLIC_NETBANKING_URL,

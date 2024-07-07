@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  user-app:
+    container_name: "user-app"
+    build:
+      context: .
+      dockerfile: ./apps/user-app/Dockerfile.user
+    volumes:
+      - ./apps/user-app:/app/apps/user-app
+      - /app/apps/user-app/node_modules
+    restart: always
+    ports:
+      - 3001:3001
+    networks:
+      - app_network
+  bank-webhook:
+    container_name: "bank-webhook"
+    build:
+      context: .
+      dockerfile: ./apps/bank-webhook/Dockerfile.webhook
+    volumes:
+      - ./apps/bank-webhook:/app/apps/bank-webhook
+      - /app/apps/bank-webhook/node_modules
+    restart: always
+    ports:
+      - 3002:3002
+    networks:
+      - app_network
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    external: true

@@ -2,7 +2,7 @@
 import db from '@repo/db/client';
 import express from 'express'
 import {RampStatus} from '@prisma/client'
-import { bankWebhookSchema } from "@repo/schemas/schemas";
+import { bankWebhookSchema } from "@repo/schemas";
 import { sendMessage } from '../websocketServer';
  
 export const webhookRouter = express.Router();

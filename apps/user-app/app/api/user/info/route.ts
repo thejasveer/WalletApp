@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../lib/auth";
-import { infoScehma } from "@repo/schemas/schemas";
+import { infoScehma } from "@repo/schemas";
 import prisma from "@repo/db/client";
 import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {

@@ -1,0 +1,49 @@
+FROM node:20.12.0-alpine3.19 AS base
+
+FROM base AS builder
+
+RUN apk update && apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+RUN npm install -g turbo
+COPY . .
+RUN turbo prune --scope=bank-webhook --docker
+
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk update && apk add --no-cache libc6-compat
+WORKDIR /app
+
+# First install the dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/package-lock.json ./package-lock.json
+# Verify the presence of copied files
+
+RUN npm install
+
+# Build the project
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+
+
+RUN npm run build
+
+FROM base AS runner
+WORKDIR /app
+
+# Don't run production as root
+# RUN addgroup --system --gid 1001 bankWebhook
+# RUN adduser --system --uid 1001 bankWebhook
+# USER bankWebhook
+
+COPY --from=installer /app .
+
+# Can you add a script to the global package.json that does this?
+WORKDIR /app
+RUN cd packages/db && npx prisma generate  && cd ../..
+
+EXPOSE 3002
+WORKDIR /app/apps/bank-webhook
+CMD ["npm", "run", "start"]

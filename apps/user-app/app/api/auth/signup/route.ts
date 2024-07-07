@@ -3,7 +3,7 @@ import prisma from "@repo/db/client";
 import bcrypt from "bcryptjs";
  
 import axios from "axios";
-import {signupSchema} from "@repo/schemas/schemas"
+import {signupSchema} from "@repo/schemas"
 
 export async function POST(req: NextRequest) {
   try {

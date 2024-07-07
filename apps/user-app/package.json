@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "user-app",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,10 +11,9 @@
   "dependencies": {
     "@repo/store": "*",
     "@repo/ui": "*",
-  
+    "@repo/schemas":"*",
     "@types/bcryptjs": "^2.4.6",
     "axios": "^1.7.2",
-  
     "bcryptjs": "^2.4.3",
     "jose": "^5.4.0",
     "next": "^14.1.1",
