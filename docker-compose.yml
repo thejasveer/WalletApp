@@ -14,6 +14,8 @@ services:
       - 3001:3001
     networks:
       - app_network
+    env_file:
+      - ./.env
   bank-webhook:
     container_name: "bank-webhook"
     build:
@@ -25,6 +27,8 @@ services:
     restart: always
     ports:
       - 3002:3002
+    env_file:
+       - ./.env
     networks:
       - app_network
 
@@ -33,3 +37,4 @@ services:
 networks:
   app_network:
     external: true
+    driver: bridge

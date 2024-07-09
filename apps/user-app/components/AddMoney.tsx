@@ -44,30 +44,32 @@ export const AddMoney = () => {
         openNetbankingPopup()
     }
      const openNetbankingPopup = async()=>{
-            const res = await createRampTransaction(type,amount)
-            if(!res.success){
+            const res:any = await createRampTransaction(type,amount)
+            if(res&& !res.success){
                 bark({success:res.success,message:res.message})
                 return false;
+            }else{
+                resetTransactions()
+                resetBalance()
+                const params = new URLSearchParams({
+                paymentToken: res.token,
+                token:user.netbankingLoginToken,
+                });
+                const newWindow = popupWindow(url+'?'+params,"netbank app",window,400,500);
+                if (newWindow) {
+                    // Setting up an interval to check if the window is closed
+                    const checkWindowClosedInterval = setInterval(() => {
+                        if (newWindow.closed) {
+                            clearInterval(checkWindowClosedInterval);
+                            setAmount(0);
+                          }
+                    }, 1000); // Check every second
+                } else {
+                    bark({message:"Failed to open new window. Please allow pop-ups for this site.",success:false})
+                    
+                }
             }
-            resetTransactions()
-            resetBalance()
-            const params = new URLSearchParams({
-            paymentToken: res.token,
-            token:user.netbankingLoginToken,
-            });
-            const newWindow = popupWindow(url+'?'+params,"netbank app",window,400,500);
-            if (newWindow) {
-                // Setting up an interval to check if the window is closed
-                const checkWindowClosedInterval = setInterval(() => {
-                    if (newWindow.closed) {
-                        clearInterval(checkWindowClosedInterval);
-                        setAmount(0);
-                      }
-                }, 1000); // Check every second
-            } else {
-                bark({message:"Failed to open new window. Please allow pop-ups for this site.",success:false})
-                
-            }
+       
         }
  
 

@@ -2,7 +2,7 @@
 import db from '@repo/db/client'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth';
-import { signIn } from 'next-auth/react';
+ 
 
 export  const  getTrasactions = async (count:number = -1) => {
  
@@ -10,7 +10,7 @@ export  const  getTrasactions = async (count:number = -1) => {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-       signIn()
+      return null
     }
 
     const userId = Number(session.user.id)

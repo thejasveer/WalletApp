@@ -20,7 +20,7 @@ export default async function() {
             }  
     const balance :any = await getBalance();
     const transactions:any = await getTrasactions(4);
- console.log(balance)
+
  
 
     return <div className="w-full">

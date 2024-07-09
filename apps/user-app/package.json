@@ -9,12 +9,14 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "@repo/schemas": "*",
     "@repo/store": "*",
     "@repo/ui": "*",
-    "@repo/schemas":"*",
     "@types/bcryptjs": "^2.4.6",
+    "@types/dotenv": "^8.2.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
     "jose": "^5.4.0",
     "next": "^14.1.1",
     "next-auth": "^4.24.7",

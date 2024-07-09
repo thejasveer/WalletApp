@@ -12,14 +12,17 @@ export function useWebSocket() {
     const {resetBalance} = useBalance()
     const {resetTransactions} = useTransactions()
     const user = useRecoilValue(userAtom)
+
  
   useEffect(() => {
-    if (user && user.id && process.env.NEXT_PUBLIC_WEBSOCKET_URL) {
+    
+    if (user && user.id) {
      
-    if (ws.current == null) {
-        ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-        console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-    }
+     if (ws.current == null) {
+      console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
+      ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL||'');
+      console.log("Connected to WebSocket URL1:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
+     }
 
       ws.current.onopen = () => {
         console.log("WebSocket connection opened");
@@ -58,5 +61,5 @@ export function useWebSocket() {
     }
   };
 
-  return { messages, sendMessage };
+  return { messages, sendMessage};
 }

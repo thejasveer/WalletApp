@@ -5,7 +5,7 @@ import {RampType ,RampStatus}   from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import { SignJWT } from "jose";
-import { signIn } from "next-auth/react";
+ 
 import { getBalance } from "./getBalance";
 
 
@@ -16,7 +16,7 @@ export async function createRampTransaction(type: RampType, amount: number) {
     const session = await getServerSession(authOptions);
     const balance:any = await getBalance()
     if (!session) {
-       signIn()
+      return null
     }
     if(balance.anmount<amount&&type==RampType.OFF_RAMP){
         return {

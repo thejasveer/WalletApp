@@ -2,14 +2,14 @@
 import db from '@repo/db/client'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth';
-import { signIn } from 'next-auth/react';
+ 
 
 export  const  getBalance = async () => {
  try{
     const session = await getServerSession(authOptions);
    
     if (!session) {
-       signIn()
+        return null
     }
  
     const balance = await db.balance.findFirst({

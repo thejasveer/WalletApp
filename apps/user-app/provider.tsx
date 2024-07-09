@@ -22,11 +22,11 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
     
         const currentLoggedInUser =  session?.user ;
         const [user,setCurrentUser] = useRecoilState(userAtom)
-        useWebSocket()
+       useWebSocket()
        const {resetBalance}= useBalance()
          useEffect(() => {
             if(currentLoggedInUser){
-                console.log(session)
+           
             if (currentLoggedInUser) {
             
                 setCurrentUser((prev) => ({
@@ -38,18 +38,13 @@ const SessionSyncProvider= ({children}: {children: React.ReactNode}) => {
                     netbankingLoginToken: currentLoggedInUser.netbankingLoginToken
                 }));
                 resetBalance()       
+                
             } 
         }else{
          setCurrentUser(null)
           }
         }, [session]);
-
-    
-      
-       
-    
-      
-        return <>{children}</>;
+ return <>{children}</>;
     
 
   };

@@ -4,13 +4,13 @@ import { webhookRouter } from "./routers/webhookRouter";
 import dotenv from 'dotenv';
 import { startWebSocketServer } from "./websocketServer";
  
-dotenv.config({ path: __dirname + "/../.env" })
- const PORT_EXPRESS_WEBHOOK =  process.env.PORT_EXPRESS_WEBHOOK||'3002'
+dotenv.config({ path: __dirname + "/../../../.env" })
+ const PORT_EXPRESS_WEBHOOK =  process.env.PORT_EXPRESS_WEBHOOK 
  
 
 const app = express();
 
-app.use(cors())
+// app.use(cors())
 app.use(express.json())
  
 

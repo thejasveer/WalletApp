@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
-require('dotenv').config();
-console.log('Environment Variables:', process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-
+require('dotenv').config({path: __dirname+"/../../.env"});
+ 
 module.exports = {
   transpilePackages: ["@repo/ui"],
  

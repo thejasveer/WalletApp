@@ -39,7 +39,7 @@ export function P2p() {
 
         }
         setLoading(true)
-        const r =     await p2pTransfer(number, Number(amount) * 100);
+        const r:any = await p2pTransfer(number, Number(amount) * 100);
        
         bark(r)
         resetBalance()

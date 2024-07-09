@@ -8,6 +8,9 @@ import axios from "axios";
 export async function p2pTransfer(to: string, amount: number) {
 
     const session = await getServerSession(authOptions);
+    if (!session) {
+      throw new Error("Unauthorzed")
+    }
     const from = session?.user?.id;
     if (!from) {
         return {
@@ -76,8 +79,7 @@ export async function p2pTransfer(to: string, amount: number) {
                 toBalance:toUser.Balance?.amount
             }
           })
-          console.log(process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification')
-       
+          console.log(process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL)
           await axios.post(process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification', {
             userId:Number(toUser.id),
             message:"$"+amount/100+" credited to your account."
@@ -92,7 +94,7 @@ export async function p2pTransfer(to: string, amount: number) {
     } catch (error:any) {
         return {
          success:false, 
-         message: error.message +process.env.NEXT_PUBLIC_SERVER_WEBHOOK_URL+'/sendNotification'
+         message: error.message
         }
     }
  
