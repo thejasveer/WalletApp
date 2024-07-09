@@ -50,5 +50,6 @@ jobs:
             sudo docker pull codewithjass/wallet_app:user-app
             sudo docker pull codewithjass/wallet_app:bank-webhook
             sudo docker-compose down
-            docker network inspect app_network >/dev/null 2>&1 || docker network create app_network
-            sudo docker-compose up --build
+            sudo docker network inspect app_network >/dev/null 2>&1 || sudo docker network create app_network
+            cd walletApp
+            sudo docker-compose up

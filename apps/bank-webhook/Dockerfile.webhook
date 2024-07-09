@@ -26,7 +26,7 @@ RUN npm install
 # Build the project
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-
+RUN cd packages/db && npx prisma generate   
 
 RUN npm run build
 
@@ -41,8 +41,7 @@ WORKDIR /app
 COPY --from=installer /app .
 
 # Can you add a script to the global package.json that does this?
-WORKDIR /app
-RUN cd packages/db && npx prisma generate  && cd ../..
+
 
 EXPOSE 3002
 WORKDIR /app/apps/bank-webhook

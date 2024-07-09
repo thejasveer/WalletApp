@@ -3,7 +3,9 @@ version: "3.8"
 services:
   user-app:
     container_name: "user-app"
-    image: codewithjass/wallet_app:user-app
+    build:
+      context: .
+      dockerfile: ./apps/user-app/Dockerfile.user
     volumes:
       - ./apps/user-app:/app/apps/user-app
       - /app/apps/user-app/node_modules
@@ -16,7 +18,9 @@ services:
       - ./.env
   bank-webhook:
     container_name: "bank-webhook"
-    image: codewithjass/wallet_app:bank-webhook
+    build:
+      context: .
+      dockerfile: ./apps/bank-webhook/Dockerfile.webhook
     volumes:
       - ./apps/bank-webhook:/app/apps/bank-webhook
       - /app/apps/bank-webhook/node_modules
@@ -33,3 +37,4 @@ services:
 networks:
   app_network:
     external: true
+    driver: bridge
