@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import { startWebSocketServer } from "./websocketServer";
  
 dotenv.config({ path: __dirname + "/../../../.env" })
- const PORT_EXPRESS_WEBHOOK =  process.env.PORT_EXPRESS_WEBHOOK 
+const PORT_EXPRESS_WEBHOOK =  process.env.PORT_EXPRESS_WEBHOOK 
  
 
 const app = express();

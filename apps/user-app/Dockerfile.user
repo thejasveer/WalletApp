@@ -4,6 +4,18 @@ FROM base AS builder
 
 RUN apk update && apk add --no-cache libc6-compat
 
+ENV NEXTAUTH_URL=NEXTAUTH_URL
+ENV NEXT_PUBLIC_JWT_SECRET=NEXT_PUBLIC_JWT_SECRET
+ENV NEXT_PUBLIC_NETBANKING_URL=NEXT_PUBLIC_NETBANKING_URL
+ENV NEXT_PUBLIC_SERVER_WEBHOOK_URL=NEXT_PUBLIC_SERVER_WEBHOOK_URL
+ENV NEXT_PUBLIC_SIGNUP_NETBANKING_URL=NEXT_PUBLIC_SIGNUP_NETBANKING_URL
+ENV NEXT_PUBLIC_WEBSOCKET_URL=NEXT_PUBLIC_WEBSOCKET_URL
+ENV PORT_EXPRESS_WEBHOOK=PORT_EXPRESS_WEBHOOK
+
+COPY ./entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
 
 WORKDIR /app
 
@@ -30,6 +42,8 @@ COPY turbo.json turbo.json
 RUN cd packages/db && npx prisma generate   
 
 RUN npm run build --filter=user-app...
+
+
 
 FROM base AS runner
 WORKDIR /app

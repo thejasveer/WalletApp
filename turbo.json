@@ -5,14 +5,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env.development.local",
-        ".env.local",
-        ".env.development",
-        ".env"
-      ]
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -20,15 +13,11 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "outputs": ["dist/**", ".next/**"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env.development.local",
-        ".env.local",
-        ".env.development",
-        ".env"
-      ]
-       } 
-  
+      "env": ["NEXT_PUBLIC_NETBANKING_URL","NEXT_PUBLIC_SIGNUP_NETBANKING_URL",
+      "NEXT_PUBLIC_NETBANKING_SECRET",
+      "NEXT_PUBLIC_SERVER_WEBHOOK_URL",
+      "NEXT_PUBLIC_JWT_SECRET"
+    ]
+    }
   }
 }

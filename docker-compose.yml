@@ -4,27 +4,45 @@ services:
   user-app:
     container_name: "user-app"
     image: codewithjass/wallet_app:user-app
-    volumes:
-      - ./apps/user-app:/app/apps/user-app
-      - /app/apps/user-app/node_modules
-    restart: always
-    ports:
-      - 3001:3001
-    networks:
-      - app_network
-    env_file:
-      - ./.env
-  bank-webhook:
-    container_name: "bank-webhook"
-    image: codewithjass/wallet_app:bank-webhook
-    volumes:
-      - ./apps/bank-webhook:/app/apps/bank-webhook
-      - /app/apps/bank-webhook/node_modules
     restart: always
     ports:
       - 3002:3002
+    networks:
+      - app_network
+    volumes:
+      - ./front:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
     env_file:
-       - ./.env
+      - ./.env
+    depends_on:
+      - bank-webhook
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXT_PUBLIC_JWT_SECRET: ${NEXT_PUBLIC_JWT_SECRET}
+      NEXT_PUBLIC_NETBANKING_SECRET: ${NEXT_PUBLIC_NETBANKING_SECRET}
+      NEXT_PUBLIC_NETBANKING_URL: ${NEXT_PUBLIC_NETBANKING_URL}
+      NEXT_PUBLIC_SERVER_WEBHOOK_URL: ${NEXT_PUBLIC_SERVER_WEBHOOK_URL}
+      NEXT_PUBLIC_SIGNUP_NETBANKING_URL: ${NEXT_PUBLIC_SIGNUP_NETBANKING_URL}
+      NEXT_PUBLIC_WEBSOCKET_URL: ${NEXT_PUBLIC_WEBSOCKET_URL}
+      PORT_EXPRESS_WEBHOOK: ${PORT_EXPRESS_WEBHOOK}
+
+  bank-webhook:
+    container_name: "bank-webhook"
+    image: codewithjass/wallet_app:bank-webhook
+    restart: always
+    ports:
+      - 3001:3001
+    volumes:
+     - ./:/app/
+     - /app/node_modules/
+    env_file:
+      - ./.env
+    environment:
+      PORT_EXPRESS_WEBHOOK: ${PORT_EXPRESS_WEBHOOK}
+      DATABASE_URL: ${DATABASE_URL}
+
     networks:
       - app_network
 
@@ -33,3 +51,4 @@ services:
 networks:
   app_network:
     external: true
+    driver: bridge

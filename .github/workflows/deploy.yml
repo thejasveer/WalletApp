@@ -21,7 +21,7 @@ jobs:
       - name: Build and Push User Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+           context: .
           file: ./apps/user-app/Dockerfile.user
           push: true
           tags: codewithjass/wallet_app:user-app
@@ -53,3 +53,14 @@ jobs:
             sudo docker network inspect app_network >/dev/null 2>&1 || sudo docker network create app_network
             cd walletApp
             sudo docker-compose up
+
+#               environment:
+# ER_WEBHOOK_URL}
+#       NEXT_PUBLIC_SIGNUP_NETBANKING_URL: ${NEXT_PUBLIC_SIGNUP_NETBANKING_URL}
+#       NEXT_PUBLIC_WEBSOCKET_URL: ${NEXT_PUBLIC_WEBSOCKET_      DATABASE_URL: ${DATABASE_URl}
+#       NEXTAUTH_URL: ${NEXTAUTH_URL}
+#       NEXT_PUBLIC_JWT_SECRET: ${NEXT_PUBLIC_JWT_SECRET}
+#       NEXT_PUBLIC_NETBANKING_SECRET: ${NEXT_PUBLIC_NETBANKING_SECRET}
+#       NEXT_PUBLIC_NETBANKING_URL: ${NEXT_PUBLIC_NETBANKING_URL}
+#       NEXT_PUBLIC_SERVER_WEBHOOK_URL: ${NEXT_PUBLIC_SERVURL}
+#       PORT_EXPRESS_WEBHOOK: ${PORT_EXPRESS_WEBHOOK}
