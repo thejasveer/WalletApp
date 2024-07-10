@@ -4,12 +4,6 @@ FROM base AS builder
 
 RUN apk update && apk add --no-cache libc6-compat
 
-
-COPY ./entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-
-
 WORKDIR /app
 
 RUN npm install -g turbo

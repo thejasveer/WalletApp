@@ -3,6 +3,7 @@ require('dotenv').config({path: __dirname+"/../../.env"});
  
 module.exports = {
   transpilePackages: ["@repo/ui"],
+  output: "standalone",
  
   env:{
     NEXT_PUBLIC_JWT_SECRET:process.env.NEXT_PUBLIC_JWT_SECRET,

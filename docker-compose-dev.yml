@@ -5,11 +5,11 @@ services:
     container_name: "user-app"
     build:
       context: .
-      dockerfile: ./apps/user-app/Dockerfile.user
+      dockerfile: ./apps/user-app/Dockerfile copy.user
 
     restart: always
     ports:
-      - 3002:3002
+      - 3000:3000
     networks:
       - app_network
     volumes:
