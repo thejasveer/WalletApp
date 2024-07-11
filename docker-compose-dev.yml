@@ -5,7 +5,7 @@ services:
     container_name: "user-app"
     build:
       context: .
-      dockerfile: ./apps/user-app/Dockerfile copy.user
+      dockerfile: ./apps/user-app/Dockerfile.user
 
     restart: always
     ports:
@@ -18,16 +18,7 @@ services:
       - /usr/src/app/.next
     env_file:
       - ./.env
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      NEXTAUTH_URL: ${NEXTAUTH_URL}
-      NEXT_PUBLIC_JWT_SECRET: ${NEXT_PUBLIC_JWT_SECRET}
-      NEXT_PUBLIC_NETBANKING_SECRET: ${NEXT_PUBLIC_NETBANKING_SECRET}
-      NEXT_PUBLIC_NETBANKING_URL: ${NEXT_PUBLIC_NETBANKING_URL}
-      NEXT_PUBLIC_SERVER_WEBHOOK_URL: ${NEXT_PUBLIC_SERVER_WEBHOOK_URL}
-      NEXT_PUBLIC_SIGNUP_NETBANKING_URL: ${NEXT_PUBLIC_SIGNUP_NETBANKING_URL}
-      NEXT_PUBLIC_WEBSOCKET_URL: ${NEXT_PUBLIC_WEBSOCKET_URL}
-      PORT_EXPRESS_WEBHOOK: ${PORT_EXPRESS_WEBHOOK}
+
     depends_on:
       - bank-webhook
   bank-webhook:
