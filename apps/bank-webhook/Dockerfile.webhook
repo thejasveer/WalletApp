@@ -43,6 +43,6 @@ COPY --from=installer /app .
 # Can you add a script to the global package.json that does this?
 
 
-EXPOSE 3001
+EXPOSE 3002
 WORKDIR /app/apps/bank-webhook
 CMD ["npm", "run", "start"]

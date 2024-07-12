@@ -62,7 +62,7 @@ RUN chmod +x /app/apps/user-app/app/scripts/start.sh
 
 RUN ls -la /app
 
-EXPOSE 3002
+EXPOSE 3001
 WORKDIR /app/apps/user-app
 
 CMD ["/app/scripts/start.sh"]
