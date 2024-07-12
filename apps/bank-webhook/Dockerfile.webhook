@@ -34,9 +34,9 @@ FROM base AS runner
 WORKDIR /app
 
 # Don't run production as root
-# RUN addgroup --system --gid 1001 bankWebhook
-# RUN adduser --system --uid 1001 bankWebhook
-# USER bankWebhook
+RUN addgroup --system --gid 1001 bankWebhook
+RUN adduser --system --uid 1001 bankWebhook
+USER bankWebhook
 
 COPY --from=installer /app .
 
