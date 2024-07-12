@@ -50,7 +50,7 @@ export const authOptions = {
           },
         })
     ],
-    secret: process.env.NEXT_PUBLIC_JWT_SECRET ,
+    secret: process.env.JWT_SECRET ,
     callbacks: {
         // TODO: can u fix the type here? Using any is bad
         async session({ token, session }: any) {

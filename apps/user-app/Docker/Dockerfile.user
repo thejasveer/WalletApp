@@ -28,6 +28,13 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN cd packages/db && npx prisma generate   
 
+ARG NEXT_PUBLIC_NETBANKING_URL=BAKED_NEXT_PUBLIC_NETBANKING_URL
+ARG NEXT_PUBLIC_SIGNUP_NETBANKING_URL=BAKED_NEXT_PUBLIC_SIGNUP_NETBANKING_URL
+ARG NEXT_PUBLIC_NETBANKING_SECRET=BAKED_NEXT_PUBLIC_NETBANKING_SECRET
+ARG NEXT_PUBLIC_WEBSOCKET_URL=BAKED_NEXT_PUBLIC_WEBSOCKET_URL
+ARG NEXT_PUBLIC_SERVER_WEBHOOK_URL=BAKED_NEXT_PUBLIC_SERVER_WEBHOOK_URL
+
+
 RUN npm run build  
 
 
@@ -40,15 +47,22 @@ WORKDIR /app
 # RUN adduser --system --uid 1001 userApp
 # USER userApp
 
-COPY --from=installer /app/apps/user-app/next.config.js .
-COPY --from=installer /app/apps/user-app/package.json .
+COPY --from=installer /app .
+
+COPY --from=builder /app/apps/user-app/package.json .
+COPY --from=builder /app/apps/user-app/app/ .
+COPY --from=builder /app/apps/user-app/next.config.js .
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 
-COPY --from=installer /app .
+
+RUN chmod +x /app/apps/user-app/app/scripts/replace-variable.sh
+RUN chmod +x /app/apps/user-app/app/scripts/start.sh
 # Can you add a script to the global package.json that does this?
 
+RUN ls -la /app
 
 EXPOSE 3002
 WORKDIR /app/apps/user-app
-CMD ["npm", "run", "start"]
+
+CMD ["/app/scripts/start.sh"]

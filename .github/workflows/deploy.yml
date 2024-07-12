@@ -21,8 +21,8 @@ jobs:
       - name: Build and Push User Docker image
         uses: docker/build-push-action@v2
         with:
-           context: .
-          file: ./apps/user-app/Dockerfile.user
+          context: .
+          file: ./apps/user-app/Docker/Dockerfile.user
           push: true
           tags: codewithjass/wallet_app:user-app
 
@@ -53,4 +53,3 @@ jobs:
             sudo docker network inspect app_network >/dev/null 2>&1 || sudo docker network create app_network
             cd walletApp
             sudo docker-compose up
- 

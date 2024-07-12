@@ -4,12 +4,11 @@ import {  useBalance } from './useBalance';
 import { useTransactions } from './useTransactions';
 import {useRecoilValue} from '@repo/store';
 import { userAtom } from '@repo/store';
-import { unstable_noStore as noStore } from 'next/cache';
  
-import getConfig from '../next.config';
+ 
  
 export function useWebSocket() {
-  noStore();
+ 
   const [messages, setMessages] = useState<{ userId:number, token:string, status :string}|null>(null);
   const ws = useRef<WebSocket | null>(null);
   const {bark} = useMessage()
@@ -21,11 +20,12 @@ export function useWebSocket() {
   useEffect(() => {
     
     if (user && user.id) {
- 
+      
      if (ws.current == null) {
-      console.log("Connected to WebSocket URE:",  process.env.NEXT_PUBLIC_WEBSOCKET_URL);
+    
+ 
       ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL||'');
-      console.log("Connected to WebSocket URL1:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
+      console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
      }
 
       ws.current.onopen = () => {
