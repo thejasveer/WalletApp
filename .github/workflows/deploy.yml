@@ -47,10 +47,10 @@ jobs:
           username: ${{ secrets.SSH_WALLET_USERNAME }}
           key: ${{ secrets.SSH_WALLET_KEY }}
           script: |
-            sudo docker system prune -a --volumes
-            sudo docker pull codewithjass/wallet_app:user-app
-            sudo docker pull codewithjass/wallet_app:bank-webhook
-            sudo docker-compose down
+            sudo docker pull codewithjass/wallet_app:user-app || true
+            sudo docker pull codewithjass/wallet_app:bank-webhook || true
             sudo docker network inspect app_network >/dev/null 2>&1 || sudo docker network create app_network
+            sudo docker pull codewithjass/wallet_app:user-app
             cd walletApp
+            sudo docker-compose down
             sudo docker-compose up
