@@ -25,16 +25,16 @@ export function useWebSocket() {
     
  
       ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL||'');
-      console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
+      // console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
      }
 
       ws.current.onopen = () => {
-        console.log("WebSocket connection opened");
+        // console.log("WebSocket connection opened");
         ws.current?.send(JSON.stringify({ userId: user?.id }));
       };
 
       ws.current.onmessage = (event) => {
-        console.log("WebSocket message received");
+        // console.log("WebSocket message received");
         const data = JSON.parse(event.data);
         resetBalance();
         resetTransactions();
