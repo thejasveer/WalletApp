@@ -41,14 +41,16 @@ RUN npm run build
 
 FROM base AS runner
 WORKDIR /app
+RUN ls -la /app
+
+
 
 # Don't run production as root
-RUN chmod +x /app/apps/user-app/app/scripts/replace-variable.sh
-RUN chmod +x /app/apps/user-app/app/scripts/start.sh
 
-RUN addgroup --system --gid 1001 userApp
-RUN adduser --system --uid 1001 userApp
-USER userApp
+
+# RUN addgroup --system --gid 1001 userApp
+# RUN adduser --system --uid 1001 userApp
+# USER userApp
 
 COPY --from=installer /app .
 
@@ -59,7 +61,8 @@ COPY --from=builder /app/apps/user-app/next.config.js .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 
 
-
+RUN chmod +x scripts/replace-variable.sh
+RUN chmod +x scripts/start.sh
 # Can you add a script to the global package.json that does this?
 
 

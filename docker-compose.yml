@@ -3,16 +3,13 @@ version: "3.8"
 services:
   user-app:
     container_name: "user-app"
-    image: codewithjass/wallet_app:user-app
+    image: paytm-project-starter-monorepo-user-app
     restart: always
     ports:
-      - 3002:3002
+      - 3001:3001
     networks:
       - app_network
-    volumes:
-      - ./front:/usr/src/app
-      - /usr/src/app/node_modules
-      - /usr/src/app/.next
+
     env_file:
       - ./.env
     depends_on:
@@ -21,19 +18,12 @@ services:
 
   bank-webhook:
     container_name: "bank-webhook"
-    image: codewithjass/wallet_app:bank-webhook
+    image: paytm-project-starter-monorepo-bank-webhook  
     restart: always
     ports:
-      - 3001:3001
-    volumes:
-     - ./:/app/
-     - /app/node_modules/
+      - 3002:3002
     env_file:
       - ./.env
-    environment:
-      PORT_EXPRESS_WEBHOOK: ${PORT_EXPRESS_WEBHOOK}
-      DATABASE_URL: ${DATABASE_URL}
-
     networks:
       - app_network
 
