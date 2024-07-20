@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  user-app:
+    container_name: "user-app"
+    build:
+      context: .
+      dockerfile: ./apps/user-app/Docker/Dockerfile.user
+    restart: always
+    ports:
+      - "3001:3001"
+    networks:
+      - app_network
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - bank-webhook
+
+  bank-webhook:
+    container_name: "bank-webhook"
+    build:
+      context: .
+      dockerfile: ./apps/bank-webhook/Dockerfile.webhook
+    restart: always
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./.env.dev
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    external: true
+    driver: bridge

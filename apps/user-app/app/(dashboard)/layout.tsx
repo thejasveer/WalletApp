@@ -11,7 +11,7 @@ export default function Layout({
     <div className="relative max-w-screen h-max  rounded-lg max-content">
          
     <div className="h-max marker: flex">
-        <div className="z-20 fixed bottom-0 bg-white sm:bg-transparent left-0 right-0   sm:static sm:w-72 border-r border-slate-300 h-20 sm:min-h-screen sm:mr-4  sm:pt-28">
+        <div className="z-20 fixed bottom-0 bg-white border sm:bg-transparent left-0 right-0   sm:static sm:w-72 border-r border-b-0 border-slate-300 h-20 sm:min-h-screen sm:mr-4  sm:pt-28">
             <div className="flex justify-evenly sm:flex-col  p-5">
                 <SidebarItem href={"/transfer"} icon={<TransferIcon />} title="Transfer" />
                 <SidebarItem href={"/transactions"} icon={<TransactionsIcon />} title="Transactions" />
@@ -20,7 +20,7 @@ export default function Layout({
                
             </div>
         </div>
-        <div className="w-full h-max p-5  mb-20  sticky " >{children}</div>
+        <div className="w-full  h-max p-5  mb-20  sticky " >{children}</div>
             
     </div>
     {/* <Loader/> */}

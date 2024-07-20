@@ -27,7 +27,7 @@ export default async function() {
        <PageTitle title="Transfer" />
         <div className="flex flex-col  ">
 
-            <div className="flex flex-col-reverse sm:flex-row gap-5 ">
+            <div className="flex flex-col-reverse lg:flex-row items-start   gap-5 ">
                     <AddMoney   />
                  <BalanceCard  amount={balance.amount} locked={balance.locked} /> 
                

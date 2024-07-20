@@ -22,7 +22,7 @@ const transactions:any = await getTrasactions(4)
     return   <div className="w-full ">
         <PageTitle title="P2P Transfer" />
         <div className="flex flex-col gap-2  ">
-             <div className="  flex flex-col-reverse sm:flex-row gap-5" >
+             <div className="  flex flex-col-reverse lg:flex-row gap-5 items-start" >
 
                 <P2p/>
                 {balance  && <BalanceCard amount={balance.amount} locked={balance.locked}/>}

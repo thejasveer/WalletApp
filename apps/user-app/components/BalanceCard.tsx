@@ -35,7 +35,7 @@ export const BalanceCard = ({amount, locked}: {
 
  
 
-    return <div className="relative w-full mt-10 bg-gradient-to-r from-[#856fb9] to-blue-500 space-y-2 p-5 rounded-2xl text-white">
+    return <div className="relative lg:w-1/2 w-full mt-10 bg-gradient-to-r from-[#856fb9] to-blue-500 space-y-2 p-5 rounded-2xl text-white">
        
             <div className="z-10">
                 <div className="flex z-20 flex-col  justify-between   pb-2">

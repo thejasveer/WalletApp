@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
         const netbankingSignupCred= {
             username:user.number,password:input.password
         } 
-
+        console.log(process.env.NEXT_PUBLIC_SIGNUP_NETBANKING_URL)
         const res:any = await axios.post(process.env.NEXT_PUBLIC_SIGNUP_NETBANKING_URL||'',netbankingSignupCred);
          
          user =    await prisma.user.update({
@@ -81,6 +81,10 @@ export async function POST(req: NextRequest) {
     } catch(e:any) {
 
         console.error(e.message);
+        return NextResponse.json(
+            { message: e.message,success:false },
+            
+        );
      
     }
  

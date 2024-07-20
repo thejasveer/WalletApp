@@ -1,16 +1,25 @@
- 
+"use client";
 
-import { getServerSession } from "next-auth";
-import { redirect } from 'next/navigation'
-import { authOptions } from "./lib/auth";
+import { useRouter } from "next/navigation";
 
-export default async function Page() {
-  const session = await getServerSession(authOptions);
-  if (session) {
-    redirect('/transfer')
+import { Home } from "../components/Home";
+
+import AppbarClient from "../components/AppbarClient";
+import { useSession } from "next-auth/react";
+
+export default function Page() {
+  const session = useSession();
+
+  const router = useRouter();
+
+  if (!session.data) {
+    return (
+      <>
+        {<AppbarClient />}
+        <Home />
+      </>
+    );
   } else {
-    redirect('/signin')
+    router.push("/transfer");
   }
- 
 }
- 

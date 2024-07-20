@@ -1,14 +1,17 @@
-import   { WebSocketServer } from 'ws';
-  
+import WebSocket,  { WebSocketServer } from 'ws';
  const clients: Record<string,WebSocket>= {}
 
  
+ interface IncomingMessage {
+  userId?: string;
+  [key: string]: any; // For other possible properties
+}
 
 
 export function startWebSocketServer(server: any){
     const wss = new WebSocketServer({ server: server });
     console.log("websocket")
-    wss.on('connection', function connection(ws) {
+    wss.on('connection', function connection(ws:WebSocket) {
       console.log("websocket server started")   
       ws.on('error', console.error);
         ws.on('error', console.error);
@@ -17,13 +20,14 @@ export function startWebSocketServer(server: any){
     ws.on('message',(message)=>{
 
         try {
-            const data = JSON.parse(message.toString())
+            const data:IncomingMessage = JSON.parse(message.toString())
             
             if (data.userId) {
-              console.log("user"+data.userId +"connected")
-                userId = data.userId;
-                if (userId) {
-                  clients[userId] = ws;
+           
+              
+                if (data.userId) {
+                  clients[data.userId] = ws;
+                  console.log("user"+data.userId +"connected")
                 }
             
               }

@@ -9,12 +9,17 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getServerSession } from "next-auth";
 import { authOptions } from "./lib/auth";
+import { Router } from "next/router";
+import { Footer } from "../components/Footer";
  
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Wallet",
   description: "All in one wallet",
+  icons: {
+    icon: '/favicon-16x16.png', // /public path
+  },
 };
  
 export default async function RootLayout({
@@ -30,13 +35,16 @@ export default async function RootLayout({
        
         <body className={inter.className}>
         <Providers>
-          <div className="max-w-screen flex flex-col min-h-screen bg-[#ebe6e6]">
+          <div className="max-w-screen  flex flex-col min-h-screen bg-[#ebe6e6]">
            
             {session && <AppbarClient />}
             {children}
+            <Footer/>
           </div>
+         
           <ToastContainer />
           </Providers>
+
            </body>
      
     </html>

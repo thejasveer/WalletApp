@@ -41,7 +41,7 @@ RUN npm run build
 
 FROM base AS runner
 WORKDIR /app
-RUN ls -la /app
+
 
 
 

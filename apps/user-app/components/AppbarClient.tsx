@@ -9,7 +9,7 @@ export default function Page(): JSX.Element {
  
   const router = useRouter();
   if(!session){
-     signIn()
+    router.push("/")
   }
 
 
@@ -17,9 +17,9 @@ export default function Page(): JSX.Element {
   return (
 
    <div>
-      <Appbar onSignin={signIn} onLogoClick={()=> router.push("/transfer")} onSignout={async () => {
+      <Appbar onSignin={()=>router.push("/signin")} onLogoClick={()=>!session?router.push("/"): router.push("/transfer")} onSignout={async () => {
         await signOut()
-        router.push("/signin")
+        router.push("/")
      
        
       }} user={session.data?.user} />
