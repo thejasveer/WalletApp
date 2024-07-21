@@ -109,6 +109,7 @@ export const Dasboard = () => {
                 onChange={setInput}
                 val={input.password}
                 label={"Password"}
+                disabled={user.id == 1 || (user.id == 2 && true)}
                 placeholder={"**********"}
               />
             </div>

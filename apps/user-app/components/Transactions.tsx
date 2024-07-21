@@ -101,7 +101,7 @@ export const Transactions = ({
 
       {count > 0 && (
         <div className="flex justify-center">
-          {" "}
+          {"  "}
           <Button onClick={() => router.push("/transactions")}>
             {" "}
             View all transactions
