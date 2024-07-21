@@ -22,9 +22,7 @@ export function useWebSocket() {
     if (user && user.id) {
       
      if (ws.current == null) {
-    
- 
-      ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL||'');
+       ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL||'');
       // console.log("Connected to WebSocket URL:", process.env.NEXT_PUBLIC_WEBSOCKET_URL);
      }
 
@@ -53,6 +51,7 @@ export function useWebSocket() {
     return () => {
       if (ws.current && ws.current.readyState === WebSocket.OPEN && !user) {
         ws.current.close();
+        ws.current = null;
       }
     };
   }, [user]);

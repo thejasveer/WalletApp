@@ -25,6 +25,8 @@ jobs:
           file: ./apps/user-app/Docker/Dockerfile.user
           push: true
           tags: codewithjass/wallet_app:user-app
+          build-args: |
+            DATABASE_URL=${{secrets.DATABASE_URL}}
 
       - name: Build and Push Bank webhook Docker image
         uses: docker/build-push-action@v2
@@ -33,6 +35,8 @@ jobs:
           file: ./apps/bank-webhook/Dockerfile.webhook
           push: true
           tags: codewithjass/wallet_app:bank-webhook
+          build-args: |
+            DATABASE_URL=${{secrets.DATABASE_URL}}
 
       - name: Verify wallet_app Pushed Image
         run: docker pull codewithjass/wallet_app:user-app

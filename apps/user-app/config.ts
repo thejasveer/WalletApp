@@ -1,5 +1,5 @@
 const getEnvironmentVariable = (environmentVariable: string): string => {
-    console.log(process.env)
+ 
     const unvalidatedEnvironmentVariable = process.env[environmentVariable];
     if (!unvalidatedEnvironmentVariable) {
       throw new Error(

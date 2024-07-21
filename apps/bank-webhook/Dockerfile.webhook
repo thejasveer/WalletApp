@@ -13,6 +13,7 @@ RUN turbo prune --scope=bank-webhook --docker
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
 RUN apk update && apk add --no-cache libc6-compat
+ARG DATABASE_URL
 WORKDIR /app
 
 # First install the dependencies (as they change less often)
@@ -26,7 +27,8 @@ RUN npm install
 # Build the project
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN cd packages/db && npx prisma generate   
+RUN cd packages/db && DATABASE_URL=$DATABASE_URL npx prisma generate   
+
 
 RUN npm run build
 
