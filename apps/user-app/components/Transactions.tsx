@@ -99,17 +99,13 @@ export const Transactions = ({
         ))}
       </div>
 
-      {transactionsToDisplay?.transactions.count > 0 ? (
+      {count > 0 && (
         <div className="flex justify-center">
           {" "}
           <Button onClick={() => router.push("/transactions")}>
             {" "}
             View all transactions
           </Button>
-        </div>
-      ) : (
-        <div className="flex justify-center text-semibold">
-          No recent transactions found..
         </div>
       )}
     </div>
