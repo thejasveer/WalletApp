@@ -1,81 +1,45 @@
-# Turborepo starter
+## High Level Design
 
-This is an official starter Turborepo.
+![Alt text](./HighLevel.svg)
 
-## Using this example
+## Demo
 
-Run the following command:
+[WALLET.webm](https://walletapp.wdd12-jasveer.xyz/transfer)
 
-```sh
-npx create-turbo@latest
-```
+<img src="https://raw.githubusercontent.com/thejasveer/WalletApp/main/apps/user-app/app/demo.gif" alt="Demo" width="300" height="500" />
 
-## What's inside?
+## Features
 
-This Turborepo includes the following packages/apps:
+1.  SignUp/SignIn.
+2.  Automatic SIGNUP on NETBANKING-APP.
+3.  Session based login using NextAuth.
+4.  OnRamp/OffRamp fake money from fake/to netbanking frontend and server.
+5.  Peer-2-Peer Transfer in app.
+6.  See OnRamp and OffRamp Transactions.
+7.  Transaction Status updates using Websocket server.
 
-### Apps and Packages
+## Stack
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+🧰 **Turbo Repo:** Efficient monorepo management, enabling streamlined development and easy scalability.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+🔄 **WebSocket, React, Next.js:** Real-time updates ensure that users receive instant notifications of their transactions. The dynamic and responsive UI built with React and Next.js enhances the user experience with fast loading times and smooth navigation.
 
-### Utilities
+🌐 **Express:** A robust backend framework used to build our webhook server, ensuring reliable handling of transaction updates and secure communication between services.
 
-This Turborepo has some additional tools already setup for you:
+🛠️ **Prisma:** A powerful ORM that simplifies database management with type-safe queries, making it easier to handle complex database operations and maintain data integrity.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+💻 **TypeScript:** Provides a type-safe codebase that helps catch errors early in the development process, improving code quality and maintainability.
 
-### Build
+🐳 **Docker & Docker Compose:** Simplified development, testing, and deployment by containerizing applications, ensuring consistent environments across all stages of the development lifecycle.
 
-To build all apps and packages, run the following command:
+☁️ **AWS EC2:** Scalable and secure cloud hosting that ensures high availability and performance, allowing the app to handle a growing number of users and transactions seamlessly.
 
-```
-cd my-turborepo
-pnpm build
-```
+🔄 **CI/CD Pipeline:** An automated deployment process that facilitates continuous integration and delivery, ensuring that new features and updates are deployed quickly and reliably.
 
-### Develop
+🎨 **Tailwind CSS:** A utility-first CSS framework that helps create elegant and responsive UI designs, making the app visually appealing and user-friendly.
 
-To develop all apps and packages, run the following command:
+## CI/CD jobs
 
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+1.  On pull requests build job will be run.
+2.  On push to main branch it will be pushed docker image.
+3.  On push to main branch it will push new docker image and pull on ec2 server and will start the app via docker compose.

@@ -10,7 +10,7 @@ import { Filter } from "../../../packages/ui/src/Filter";
 import { usePathname, useRouter } from "next/navigation";
 import { Refresh } from "./Refersh";
 import { Loader } from "./Loader";
-
+import { useSearchParams } from "next/navigation";
 export const Transactions = ({
   transactions,
   type,
@@ -20,24 +20,35 @@ export const Transactions = ({
   type: string;
   count: number;
 }) => {
-  // const user= useRecoilValue(userAtom);
   const [typeSelected, setTypeSelected] = useState(type);
+  const [typeHeading, setTypeHeading] = useState<string>(() => {
+    return typeSelected == "p2p" ? "P2P" : "Transfer";
+  });
   const [transactionsToDisplay, setTransacitionsToDisplay] = useState({
     transactions: transactions,
     type,
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { currTransactions, resetTransactions } = useTransactions(count);
 
   useEffect(() => {
+    const type = searchParams.get("type");
+    if (type) {
+      setTypeSelected(type);
+    }
+  }, []);
+  useEffect(() => {
     if (currTransactions.state == "hasValue") {
       if (typeSelected == "p2p") {
+        setTypeHeading("P2P");
         setTransacitionsToDisplay({
           transactions: currTransactions.contents.p2pTransaction,
           type: "p2p",
         });
       } else {
+        setTypeHeading("Transfer");
         setTransacitionsToDisplay({
           transactions: currTransactions.contents.rampTransaction,
           type: "transfer",
@@ -59,7 +70,7 @@ export const Transactions = ({
           {pathname == "/transactions" && (
             <div className="flex px-2 mb-5">
               <Filter
-                label={"Types"}
+                label={typeHeading}
                 items={[
                   {
                     name: "Transfer",
@@ -85,24 +96,33 @@ export const Transactions = ({
 
       <div className="py-0 max-h-[40rem] overflow-scroll">
         <br />
-        {transactionsToDisplay?.transactions.map((t: any, i: number) => (
-          <div key={i}>
-            <Transaction
-              heading={t.heading}
-              date={t.date}
-              amount={t.amount / 100}
-              balance={t.balance}
-              type={t.type}
-              status={t.status}
-            ></Transaction>
+        {transactionsToDisplay?.transactions.length == 0 ? (
+          <div className="flex justify-center font-legth text-slate-400">
+            {"  "}
+            <div> No recent "{typeHeading}" transactions found...</div>
           </div>
-        ))}
+        ) : (
+          transactionsToDisplay?.transactions.map((t: any, i: number) => (
+            <div key={i}>
+              <Transaction
+                heading={t.heading}
+                date={t.date}
+                amount={t.amount / 100}
+                balance={t.balance}
+                type={t.type}
+                status={t.status}
+              ></Transaction>
+            </div>
+          ))
+        )}
       </div>
 
-      {count > 0 && (
+      {count > 0 && transactionsToDisplay?.transactions.length > 0 && (
         <div className="flex justify-center">
           {"  "}
-          <Button onClick={() => router.push("/transactions")}>
+          <Button
+            onClick={() => router.push("/transactions?type=" + typeSelected)}
+          >
             {" "}
             View all transactions
           </Button>
@@ -131,16 +151,16 @@ function Transaction({
   useEffect(() => {
     switch (status) {
       case "SUCCESS":
-        setPillClass(" text-green-400");
+        setPillClass(" text-green-500");
         break;
       case "INITIATED":
-        setPillClass("text-yellow-400");
+        setPillClass("text-yellow-500");
         break;
       case "FAILED":
-        setPillClass("text-red-400");
+        setPillClass("text-red-500");
         break;
       case "PROCCESSING":
-        setPillClass(" text-orange-400");
+        setPillClass(" text-orange-500");
     }
   }, []);
 
