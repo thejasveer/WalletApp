@@ -18,16 +18,17 @@ export async function createRampTransaction(type: RampType, amount: number) {
     if (!session) {
       return null
     }
-    if(balance.anmount<amount&&type==RampType.OFF_RAMP){
+    
+    if((balance.amount-balance.locked)<amount &&type==RampType.OFF_RAMP){
         return {
             success:false,
             token:"",
-            message:"You don't have enough funds."
+            message:"You don't have enough funds. $"+ balance.locked/100+ " is locked due to some pending transactions."
         }
     }else{
         const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_NETBANKING_SECRET)
         const token = await new SignJWT({
-            amount: amount * 100,
+            amount: amount ,
             type:type,
           }).setProtectedHeader({ alg: "HS256" })
             .setIssuedAt()
@@ -39,7 +40,7 @@ export async function createRampTransaction(type: RampType, amount: number) {
                     where:{userId:Number(session.user?.id)},
                     data:{
                         locked:{
-                            increment:Number(amount * 100)
+                            increment:Number(amount )
                         }
                     }
                 })
@@ -53,7 +54,7 @@ export async function createRampTransaction(type: RampType, amount: number) {
                 startTime: new Date(),
                 token: token,
                 userId: Number(session?.user?.id),
-                amount: amount * 100,
+                amount: amount ,
                 balance:balance.amount
             }
         });

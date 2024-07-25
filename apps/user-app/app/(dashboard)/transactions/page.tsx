@@ -14,7 +14,6 @@ export default async function (req: any) {
     redirect("/signin");
   }
   const transactions: any = await getTrasactions(-1);
-  console.log(transactions);
 
   return (
     <div className=" w-full ">

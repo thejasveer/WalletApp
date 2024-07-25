@@ -3,6 +3,7 @@
 # Dependencies
 node_modules
 .env
+.env.dev
 node_modules1
 .pnp
 .pnp.js

@@ -52,7 +52,7 @@ export const AddMoney = () => {
     openNetbankingPopup();
   };
   const openNetbankingPopup = async () => {
-    const res: any = await createRampTransaction(type, amount);
+    const res: any = await createRampTransaction(type, Number(amount * 100));
     if (res && !res.success) {
       bark({ success: res.success, message: res.message });
       return false;
