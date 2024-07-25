@@ -3,14 +3,14 @@
 # Dependencies
 node_modules
 .env
-.env.dev
+ 
 node_modules1
 .pnp
 .pnp.js
 
 # Local env files
 .env
-.env.dev
+.env.dev1
 .env.development.local
 .env.test.local
 .env.production
