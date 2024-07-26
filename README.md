@@ -1,6 +1,6 @@
 ## High Level Design
 
-![Alt text](./HighLevel.svg)
+![Alt text](./Highlevel.svg)
 
 ## Demo
 
