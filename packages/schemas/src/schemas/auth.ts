@@ -20,7 +20,7 @@ export type signinSchemaParam = z.infer<typeof signinSchema>
  
 export const infoScehma = z.object({
     name: z.string().min(3,{message:"Name should be ateast 3 characters long"}).nullable(),
-    password:z.string().min(6,{message:"Password should be atleast 6 characters long."}).nullable(),
+    // password:z.string().min(6,{message:"Password should be atleast 6 characters long."}).nullable(),
     
    })
   

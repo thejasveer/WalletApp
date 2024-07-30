@@ -18,7 +18,7 @@ export const Dasboard = () => {
   const [input, setInput] = useState<any>({
     name: null,
     email: null,
-    password: null,
+    // password: null,
     number: null,
   });
   const [loading, setLoading] = useState(false);
@@ -43,13 +43,13 @@ export const Dasboard = () => {
     const res: any = await axios.post("/api/user/info", {
       name: input.name,
       number: input.number,
-      password: input.password,
+      // password: input.password,
     });
 
     if (!res.data.success) {
       setErrors(res.data.error);
       setLoading(false);
-      setInput((prev: any) => ({ ...prev, password: null }));
+      // setInput((prev: any) => ({ ...prev, password: null }));
     } else {
       setUser((prev: any) => ({ ...prev, name: input.name }));
       setErrors([]);
@@ -101,7 +101,7 @@ export const Dasboard = () => {
                 placeholder={"Enter your Email"}
               />
             </div>
-            <div>
+            {/* <div>
               <AuthInput
                 grid={true}
                 keyStr={"password"}
@@ -112,7 +112,7 @@ export const Dasboard = () => {
                 disabled={user.id == 1 || (user.id == 2 && true)}
                 placeholder={"**********"}
               />
-            </div>
+            </div> */}
 
             <div className="flex w-full justify-center">
               <Button loading={loading} onClick={handleSubmit}>

@@ -6,9 +6,11 @@ import db from "@repo/db/client";
 import axios from "axios";
  
 export async function p2pTransfer(to: string, amount: number) {
+ 
 
     const session = await getServerSession(authOptions);
-    if (!session) {
+  
+    if (!session || !session.user) {
       throw new Error("Unauthorzed")
     }
     const from = session?.user?.id;

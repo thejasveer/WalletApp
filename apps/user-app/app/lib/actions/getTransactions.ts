@@ -9,9 +9,9 @@ export  const  getTrasactions = async (count:number = -1) => {
  try{
     const session = await getServerSession(authOptions);
     
-    if (!session) {
-      return null
-    }
+    if (!session || !session.user) {
+      throw new Error("Unauthorzed")
+      }
 
     const userId = Number(session.user.id)
     const rampTransaction = await db.rampTransaction.findMany({

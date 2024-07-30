@@ -15,10 +15,10 @@ export async function createRampTransaction(type: RampType, amount: number) {
 
     const session = await getServerSession(authOptions);
     const balance:any = await getBalance()
-    if (!session) {
-      return null
-    }
-    
+    if (!session || !session.user) {
+        throw new Error("Unauthorzed")
+      }
+ 
     if((balance.amount-balance.locked)<amount &&type==RampType.OFF_RAMP){
         return {
             success:false,

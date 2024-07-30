@@ -22,15 +22,16 @@ export async function POST(req: NextRequest) {
         }
         if(input.password!=null){
             const hashedPassword = await bcrypt.hash(input.password, 10);
-             await prisma.user.update(({
-                where:{
-                    number:input.number
-                },
-                data: {
-                    name:input.name,
-                     password:hashedPassword ,
-                  }
-            }))
+            // reset password routine
+            //  await prisma.user.update(({
+            //     where:{
+            //         number:input.number
+            //     },
+            //     data: {
+            //         name:input.name,
+            //          password:hashedPassword ,
+            //       }
+            // }))
          
         }else{
             await prisma.user.update(({

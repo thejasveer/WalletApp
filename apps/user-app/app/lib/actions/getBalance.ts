@@ -8,9 +8,9 @@ export  const  getBalance = async () => {
  try{
     const session = await getServerSession(authOptions);
    
-    if (!session) {
-        return null
-    }
+    if (!session || !session.user) {
+        throw new Error("Unauthorzed")
+      }
  
     const balance = await db.balance.findFirst({
         where:{
