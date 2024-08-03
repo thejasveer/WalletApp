@@ -43,3 +43,25 @@
 1.  On pull requests build job will be run.
 2.  On push to main branch it will be pushed docker image.
 3.  On push to main branch it will push new docker image and pull on ec2 server and will start the app via docker compose.
+
+# DEMO Credentails
+
+## Demo User 1 Netbanking credentials - PASSWORD -> 111
+
+1. Royal Bank of Canada (RBC) - 5289851653
+2. Toronto-Dominion Bank (TD Bank) - 5219234684
+3. Bank of Nova Scotia (Scotiabank) - 7061446466
+4. Bank of Montreal (BMO) - 3478559388
+5. Canadian Imperial Bank of Commerce (CIBC) - 0199517077
+6. National Bank of Canada - 8731559051
+7. HSBC Bank Canada - 6675206800
+
+## Demo User 2 Netabanking credentials - PASSWORD -> 111
+
+1. Royal Bank of Canada (RBC) - 3432310083
+2. Toronto-Dominion Bank (TD Bank) - 9998555863
+3. Bank of Nova Scotia (Scotiabank) - 1982012644
+4. Bank of Montreal (BMO) - 8769761343
+5. Canadian Imperial Bank of Commerce (CIBC) - 9877438946
+6. National Bank of Canada - 8214251704
+7. HSBC Bank Canada - 3132185213
