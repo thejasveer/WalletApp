@@ -42,7 +42,6 @@ USER bankWebhook
 
 COPY --from=installer /app .
 
-# Can you add a script to the global package.json that does this?
 
 
 EXPOSE 3002

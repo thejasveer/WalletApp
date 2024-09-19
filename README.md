@@ -1,67 +1,78 @@
-## High Level Design
+## High-Level Design
 
-![Alt text](./Highlevel.svg)
+![High-Level Design](./Highlevel.svg)
 
 ## Demo
 
-[WALLET.webm](https://walletapp.wdd12-jasveer.xyz/transfer)
+Check out a live demo of the wallet application in action:
 
-<img src="https://raw.githubusercontent.com/thejasveer/WalletApp/main/apps/user-app/app/demo.gif" alt="Demo" width="300" height="500" />
+- **[View the Demo](https://walletapp.wdd12-jasveer.xyz/transfer)**
+- ![Demo](https://raw.githubusercontent.com/thejasveer/WalletApp/main/apps/user-app/app/demo.gif)
 
-## Features
+## Project Overview: Wallet Application
 
-1.  SignUp/SignIn.
-2.  Automatic SIGNUP on NETBANKING-APP.
-3.  Session based login using NextAuth.
-4.  OnRamp/OffRamp fake money from fake/to netbanking frontend and server.
-5.  Peer-2-Peer Transfer in app.
-6.  See OnRamp and OffRamp Transactions.
-7.  Transaction Status updates using Websocket server.
+The Wallet Application is a full-stack financial platform that simulates real-world banking operations, enabling users to manage accounts, process transactions, and track financial activity in real-time. Built with a modular, scalable architecture, the project features a robust and secure user experience, real-time updates, and seamless integration with a simulated banking system.
 
-## Stack
+## Key Features
 
-🧰 **Turbo Repo:** Efficient monorepo management, enabling streamlined development and easy scalability.
+1. **SignUp/SignIn**: Secure user authentication for account creation and login.
+2. **Automatic Sign-Up on Netbanking**: Users are automatically registered with the simulated Netbanking app, creating a seamless onboarding experience.
+3. **Session-based Login with NextAuth**: Provides secure session management to maintain persistent user sessions.
+4. **OnRamp/OffRamp Transactions**: Users can simulate adding or withdrawing funds between their wallet and a netbanking service.
+5. **Peer-to-Peer Transfers**: Users can transfer funds between one another securely and instantly.
+6. **Transaction History**: View comprehensive records of all OnRamp and OffRamp transactions in the app.
+7. **Real-Time Transaction Status Updates**: Powered by a WebSocket server, users receive instant updates on transaction statuses, ensuring a transparent and responsive experience.
 
-🔄 **WebSocket, React, Next.js:** Real-time updates ensure that users receive instant notifications of their transactions. The dynamic and responsive UI built with React and Next.js enhances the user experience with fast loading times and smooth navigation.
+## Design Patterns and Architectures
 
-🌐 **Express:** A robust backend framework used to build our webhook server, ensuring reliable handling of transaction updates and secure communication between services.
+- **Module Pattern**: Applied across the project to expose specific methods and variables, promoting code reusability and maintainability.
+- **Monorepo Architecture**: Managed with **Turbo Repo**, enabling seamless handling of multiple services, dependencies, and builds in a single codebase.
+- **Singleton Pattern**: Utilized for managing database instances efficiently, ensuring that only one instance is used across the app.
+- **WebSocket PUB/SUB Pattern**: Implemented for real-time communication across services, ensuring users get live transaction updates.
+- **Component-Based Architecture**: Used in the frontend (React) to maintain clean, modular, and reusable UI components.
 
-🛠️ **Prisma:** A powerful ORM that simplifies database management with type-safe queries, making it easier to handle complex database operations and maintain data integrity.
+## Continuous Integration & Deployment (CI/CD)
 
-💻 **TypeScript:** Provides a type-safe codebase that helps catch errors early in the development process, improving code quality and maintainability.
+Using **GitHub Actions**, I have implemented a robust CI/CD pipeline that automates the build and deployment process:
 
-🐳 **Docker & Docker Compose:** Simplified development, testing, and deployment by containerizing applications, ensuring consistent environments across all stages of the development lifecycle.
+1. **Pull Request Builds**: Triggers automatic builds on pull requests to ensure code stability.
+2. **Main Branch Pushes**: Automatically pushes Docker images to the registry and deploys them to AWS EC2 using Docker Compose.
+3. **Automated Docker Deployments**: Upon every push to the main branch, a new Docker image is generated, pulled, and deployed on the EC2 server for seamless updates.
 
-☁️ **AWS EC2:** Scalable and secure cloud hosting that ensures high availability and performance, allowing the app to handle a growing number of users and transactions seamlessly.
+## Tech Stack
 
-🔄 **CI/CD Pipeline:** An automated deployment process that facilitates continuous integration and delivery, ensuring that new features and updates are deployed quickly and reliably.
+- 🧰 **Turbo Repo**: Monorepo management for efficient, scalable development.
+- 🔄 **WebSocket, React, Next.js**: Real-time updates with a dynamic UI built using React and Next.js, enhancing user experience.
+- 🌐 **Express**: A robust backend framework for handling transaction updates and secure communication between services.
+- 🛠️ **Prisma**: Type-safe ORM for seamless database management, ensuring efficient and reliable data operations.
+- 💻 **TypeScript**: Strongly-typed development environment for better error detection and improved code maintainability.
+- 🐳 **Docker & Docker Compose**: Streamlined development, testing, and deployment through containerization, ensuring consistent environments.
+- ☁️ **AWS EC2**: Secure and scalable cloud hosting to support growing user and transaction demands.
+- 🎨 **Tailwind CSS**: A utility-first CSS framework that ensures a responsive and visually appealing design.
+- 🔄 **NextAuth**: Manages secure session-based authentication, ensuring robust security protocols.
 
-🎨 **Tailwind CSS:** A utility-first CSS framework that helps create elegant and responsive UI designs, making the app visually appealing and user-friendly.
+## Demo Credentials
 
-## CI/CD jobs
+### Demo User 1 Netbanking Credentials
 
-1.  On pull requests build job will be run.
-2.  On push to main branch it will be pushed docker image.
-3.  On push to main branch it will push new docker image and pull on ec2 server and will start the app via docker compose.
+- **Password**: 111
 
-# DEMO Credentails
+1. RBC: 5289851653
+2. TD Bank: 5219234684
+3. Scotiabank: 7061446466
+4. BMO: 3478559388
+5. CIBC: 0199517077
+6. National Bank: 8731559051
+7. HSBC: 6675206800
 
-## Demo User 1 Netbanking credentials - PASSWORD -> 111
+### Demo User 2 Netbanking Credentials
 
-1. Royal Bank of Canada (RBC) - 5289851653
-2. Toronto-Dominion Bank (TD Bank) - 5219234684
-3. Bank of Nova Scotia (Scotiabank) - 7061446466
-4. Bank of Montreal (BMO) - 3478559388
-5. Canadian Imperial Bank of Commerce (CIBC) - 0199517077
-6. National Bank of Canada - 8731559051
-7. HSBC Bank Canada - 6675206800
+- **Password**: 111
 
-## Demo User 2 Netabanking credentials - PASSWORD -> 111
-
-1. Royal Bank of Canada (RBC) - 3432310083
-2. Toronto-Dominion Bank (TD Bank) - 9998555863
-3. Bank of Nova Scotia (Scotiabank) - 1982012644
-4. Bank of Montreal (BMO) - 8769761343
-5. Canadian Imperial Bank of Commerce (CIBC) - 9877438946
-6. National Bank of Canada - 8214251704
-7. HSBC Bank Canada - 3132185213
+1. RBC: 3432310083
+2. TD Bank: 9998555863
+3. Scotiabank: 1982012644
+4. BMO: 8769761343
+5. CIBC: 9877438946
+6. National Bank: 8214251704
+7. HSBC: 3132185213
